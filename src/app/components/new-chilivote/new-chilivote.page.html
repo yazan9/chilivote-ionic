@@ -1,0 +1,41 @@
+<ion-header>
+  <app-toolbar></app-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
+  <ion-item>
+  <ion-label position="floating">What do you want to ask about?</ion-label>
+  <ion-input [(ngModel)] = "newChilivote.title" name="newChilivoteTitle"></ion-input>
+</ion-item>
+
+<ion-grid>
+  <ion-row class="ion-align-items-center ion-justify-content-center">
+    <ion-col>
+      <cl-image style="max-width:100%" (click)="openBottomSheet(1)" *ngIf="newChilivote.answerLeft; else defaultIMG1" class="" public-id={{newChilivote.answerLeft}} secure="true">
+                    
+      </cl-image>
+      <ng-template #defaultIMG1>
+      <img (click)="openBottomSheet(1)" class="upload-image-placeholder"
+          src="https://res.cloudinary.com/dzv1zwbj5/image/upload/v1570682352/Webp.net-resizeimage.jpg" 
+      />
+      </ng-template>
+    </ion-col>
+    <ion-col>
+      <cl-image style="max-width:100%" (click)="openBottomSheet(2)" *ngIf="newChilivote.answerRight;  else defaultIMG2" class="" public-id={{newChilivote.answerRight}} secure="true">
+      </cl-image>
+      <ng-template #defaultIMG2>
+      <img (click)="openBottomSheet(2)" class="upload-image-placeholder"
+          src="https://res.cloudinary.com/dzv1zwbj5/image/upload/v1570682352/Webp.net-resizeimage.jpg" 
+      />
+      </ng-template>
+    </ion-col>
+  </ion-row>
+</ion-grid>    
+<section>
+  <ion-button expand="block" (click)="submitChilivote()">Go!</ion-button>
+</section>
+<input id="PhotoUploader" style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+
+</ion-content>

@@ -1,0 +1,43 @@
+<ion-header>
+    <app-toolbar></app-toolbar>
+  </ion-header>
+<ion-content >
+    <ion-card class="welcome-card" *ngFor="let chilivote of chilivotes"> 
+      <ion-card-header>
+          <ion-item>
+              <ion-avatar slot="start">
+                  <img src="{{avatar}}">
+              </ion-avatar>
+              <ion-label>
+                <h3>{{user.username}}</h3>
+                <p>{{chilivote.created_at | date:'short'}}</p>
+              </ion-label>
+            </ion-item>
+        <ion-card-title>{{chilivote.title}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row class="ion-align-items-center ion-justify-content-center">
+            <ion-col>
+                <div style="width:100%;display:block">
+                    <cl-image style="max-width:100%; width:100%" class="" public-id="{{chilivote.answerLeft.url}}" secure="true">
+                            
+                    </cl-image>
+                    </div>
+            </ion-col>
+            <ion-col>
+                <div>
+                    <cl-image style="max-width:100%" class="" public-id="{{chilivote.answerRight.url}}" secure="true">
+                            
+                    </cl-image>
+                    </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-align-items-center ion-justify-content-center">
+              <div style="width:50%; float:left;text-align: center">Votes: {{chilivote.answerLeft.votes}}</div>
+              <div style="width:50%; float:right;text-align: center">Votes: {{chilivote.answerRight.votes}}</div>
+          </ion-row>
+        </ion-grid>    
+      </ion-card-content>
+    </ion-card>
+</ion-content>

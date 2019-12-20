@@ -1,9 +1,48 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Tab Two
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content></ion-content>
+<ion-content>
+    <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+    <div *ngIf="chilivotes.length != 0">
+      <ion-card class="welcome-card" *ngFor="let chilivote of chilivotes">
+        <ion-card-header>
+          <ion-item>
+            <ion-avatar slot="start">
+              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+            </ion-avatar>
+            <ion-label>
+              <h3>{{chilivote.username}}</h3>
+              <p>{{chilivote.created_at | date: 'short'}}</p>
+            </ion-label>
+          </ion-item>
+          <ion-card-title>{{chilivote.title}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row style="background-color:black" class="ion-align-items-center ion-justify-content-center">
+              <ion-col style="background-color:black" class="align-self-stretch"
+                (click)="vote(chilivote.answerLeft, chilivote.answerRight)">
+                <div style="position:relative;text-align:center; display: flex; align-items: center">
+                  <cl-image style="max-width:100%;" [class.voted_image]="chilivote.answerLeft.voted" class=""
+                    public-id="{{chilivote.answerLeft.url}}" secure="true">
+                  </cl-image>
+                  <div *ngIf="chilivote.answerLeft.voted"
+                    style="background-color: black; opacity: 0.5; color:white;position:absolute;text-align: center;width:100%;height:100%;top:0; display: flex; align-items: center; justify-content: center">
+                    <ion-icon name="checkmark"></ion-icon>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col style="background-color:black" (click)="vote(chilivote.answerRight, chilivote.answerLeft)">
+                <div style="position:relative;text-align:center; display: flex; align-items: center">
+                  <cl-image style="max-width:100%" [class.voted_image]="chilivote.answerRight.voted"
+                    public-id="{{chilivote.answerRight.url}}" secure="true">
+                  </cl-image>
+                  <div *ngIf="chilivote.answerRight.voted"
+                    style="background-color: black; opacity: 0.5; color:white;position:absolute;text-align: center;width:100%;height:100%;top:0; display: flex; align-items: center; justify-content: center">
+                    <ion-icon name="checkmark"></ion-icon>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>

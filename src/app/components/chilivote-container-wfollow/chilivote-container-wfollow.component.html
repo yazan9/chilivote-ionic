@@ -1,0 +1,45 @@
+asd
+{{chilivotes.length}}
+<ion-content>
+    <div *ngIf="chilivotes.length != 0">
+      <ion-card class="welcome-card" *ngFor="let chilivote of chilivotes">
+        <ion-card-header>
+          <ion-item>
+            <ion-avatar slot="start">
+              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+            </ion-avatar>
+            <ion-label>
+              <h3>{{chilivote.username}}</h3>
+              <p>{{chilivote.created_at | date: 'short'}}</p>
+            </ion-label>
+          </ion-item>
+          <ion-card-title>{{chilivote.title}}</ion-card-title>
+          <div style="position:absolute;top:16px;right:16px">
+              <ion-button size="small" *ngIf = "!chilivote.isFollowing" color="primary" (click)="onFollow(chilivote)">Follow</ion-button>
+              <ion-button size="small" *ngIf = "chilivote.isFollowing" color="primary" (click)="onUnfollow(chilivote)">Unfollow</ion-button>
+            </div>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row style="background-color:black" class="ion-align-items-center ion-justify-content-center">
+              <ion-col style="background-color:black" class="align-self-stretch">
+                <div style="position:relative;text-align:center; display: flex; align-items: center">
+                  <cl-image style="max-width:100%;" [class.voted_image]="chilivote.answerLeft.voted" class=""
+                    public-id="{{chilivote.answerLeft.url}}" secure="true">
+                  </cl-image>
+                </div>
+              </ion-col>
+              <ion-col style="background-color:black">
+                <div style="position:relative;text-align:center; display: flex; align-items: center">
+                  <cl-image style="max-width:100%" [class.voted_image]="chilivote.answerRight.voted"
+                    public-id="{{chilivote.answerRight.url}}" secure="true">
+                  </cl-image>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>

@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
+    <ion-button expand="full" color="primary" (click)="fbLogin()">
+        Login with
+        <ion-icon name="logo-facebook"></ion-icon>
+      </ion-button>
+</ion-content>

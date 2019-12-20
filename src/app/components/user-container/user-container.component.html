@@ -1,0 +1,21 @@
+<ion-card class="welcome-card"> 
+    <ion-card-header>
+        <ion-item>
+            <ion-avatar slot="start">
+                <img src="{{user.avatar}}"/>
+            </ion-avatar>
+            <ion-label>
+              <h3>{{user.username}}</h3>
+              <p>{{user.created_at | date:'mediumDate'}}</p>
+            </ion-label>
+            
+          </ion-item>
+          <ion-card-content>
+                <div>
+                    <ion-button *ngIf = "!user.isFollowing" color="primary" (click)="onFollow()">Follow</ion-button>
+                    <ion-button *ngIf = "user.isFollowing" color="primary" (click)="onUnfollow()">Unfollow</ion-button>
+                  </div>
+          </ion-card-content>
+          
+    </ion-card-header>
+  </ion-card>

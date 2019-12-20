@@ -1,3 +1,26 @@
 <ion-app>
+    <ion-menu side="start" content-id="menu_content">
+        <ion-header>
+          <ion-toolbar translucent>
+            <ion-title>Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content id="menu_content">
+          <ion-list>
+            <ion-item>
+              <ion-icon name="pulse" slot="start"></ion-icon>
+              <ion-button fill="clear" class="itemBtns" (click)="onMyFeed()">My Feed</ion-button>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="photos" slot="start" ></ion-icon>
+              <ion-button fill="clear" class="itemBtns" (click)="onMyChilivotes()">My Chilivotes</ion-button>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="log-out" slot="start" ></ion-icon>
+              <ion-button fill="clear" class="itemBtns" (click)="logout()">Logout</ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>
