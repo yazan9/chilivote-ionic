@@ -3,6 +3,8 @@ import { environment } from '../../../src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs';
+import { AnswerVoteDTO } from '../models/AnswerVoteDTO';
+import { AnswerVotePairDTO } from '../models/AnswerVotePairDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -32,4 +34,13 @@ export class VoteService {
 
     return this.http.post<any>(this.VoteUrl + '/vote/' + id, "", httpOptions)
   } 
+
+  voteAndGetAnswers(id: number): Observable<AnswerVotePairDTO[]>
+  {
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    return this.http.post<any>(this.VoteUrl + '/vote_return/' + id, "", httpOptions)
+  }
 }

@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   { path: 'new-chilivote', loadChildren: './components/new-chilivote/new-chilivote.module#NewChilivotePageModule' },
   { path: 'main', loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)},
-  { path: 'mychilivotes', loadChildren: './components/my-chilivotes/my-chilivotes.module#MyChilivotesPageModule' },
+  { path: 'mychilivotes', loadChildren: './components/my-chilivotes/my-chilivotes.module#MyChilivotesPageModule' }
 
 ];
 @NgModule({
