@@ -14,6 +14,8 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 import { Cloudinary as CloudinaryCore } from 'cloudinary-core';
 import { CloudinaryConfiguration, CloudinaryModule } from '@cloudinary/angular-5.x';
 import cloudinaryConfiguration from './config';
+import { ConnectionsSearchPipe } from './pipes/connections-search.pipe';
+import { SharedModule } from './shared.module';
 
 export const cloudinary = {
   Cloudinary: CloudinaryCore
@@ -24,8 +26,13 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, BrowserAnimationsModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
-    CloudinaryModule.forRoot(cloudinary, config)
+  imports: [
+    BrowserModule, 
+    BrowserAnimationsModule, 
+    IonicModule.forRoot(), 
+    AppRoutingModule, 
+    HttpClientModule,
+    CloudinaryModule.forRoot(cloudinary, config),
   ],
   providers: [
     StatusBar,

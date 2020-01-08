@@ -1,5 +1,4 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
-import { ChilivoteRandomDTO } from '../models/ChilivoteRandomDTO';
 import { ChilivoteService } from '../services/chilivote.service';
 import { UserService } from '../services/user.service';
 import { ChilivoteVotableDTO } from '../models/ChilivoteVotableDTO';
@@ -57,13 +56,13 @@ export class Tab4Page implements OnInit {
     });
   }
 
-  vote(answer: AnswerVoteDTO, theOtherAnswer: AnswerVoteDTO)
+  vote(event)
   {
-    this.voteService.voteAndGetAnswers(answer.id).subscribe((answersVotesList: AnswerVotePairDTO[])=> {
-      answer.voted = true;
-      theOtherAnswer.voted = false;
-      answer.votes = answersVotesList.find((a) => a.answerId === answer.id).votes;
-      theOtherAnswer.votes = answersVotesList.find((a) => a.answerId === theOtherAnswer.id).votes;
+    this.voteService.voteAndGetAnswers(event.answer.id).subscribe((answersVotesList: AnswerVotePairDTO[])=> {
+      event.answer.voted = true;
+      event.theOtherAnswer.voted = false;
+      event.answer.votes = answersVotesList.find((a) => a.answerId === event.answer.id).votes;
+      event.theOtherAnswer.votes = answersVotesList.find((a) => a.answerId === event.theOtherAnswer.id).votes;
     });
 
     this.chilivotes.splice(0,1);
@@ -96,5 +95,4 @@ export class Tab4Page implements OnInit {
   //     chilivotes.forEach(c => c.isFollowing = false);
   //   })  
   // }
-
 }

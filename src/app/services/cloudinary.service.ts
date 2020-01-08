@@ -19,6 +19,11 @@ export class CloudinaryService {
     //var token = this.authService.getToken();
     return this.http.post("https://api.cloudinary.com/v1_1/dzv1zwbj5/image/upload", {"file":file, "upload_preset": "z9mycu78"})
   }
+
+  public uploadRawAnswer(file: any): Observable<any>{
+    //var token = this.authService.getToken();
+    return this.http.post("https://api.cloudinary.com/v1_1/dzv1zwbj5/raw/upload", {"file":file, "upload_preset": "z9mycu78"})
+  }
   
   public uploadAvatar(file: any): Observable<any>{
     //var token = this.authService.getToken();

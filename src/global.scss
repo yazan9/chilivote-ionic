@@ -34,3 +34,15 @@
     padding: 2em;
     text-align: center;
 }
+
+.card-content-md{
+    -webkit-padding-start: 0;
+    padding-inline-start: 0;
+    -webkit-padding-end: 0;
+    padding-inline-end: 0;
+}
+
+.searchbar-input{
+    border: 0 !important;
+    box-shadow: none !important;
+}

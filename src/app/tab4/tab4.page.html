@@ -1,6 +1,18 @@
 <ion-content>
   <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
   <div *ngIf = "NoChilivotes" class="message">No Chilivotes to show</div>
+  <app-chilivotes-tab *ngIf="currentChilivote"
+   [currentChilivote] = "currentChilivote"
+   [votable]="true"
+   [followEnabled]="true"
+   (voted)="vote($event)"
+   ></app-chilivotes-tab>
+</ion-content>
+
+
+<!-- <ion-content>
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+  <div *ngIf = "NoChilivotes" class="message">No Chilivotes to show</div>
   <div *ngIf="currentChilivote" [@slideInOut]>
     <ion-card class="welcome-card">
       <ion-card-header>
@@ -48,4 +60,4 @@
       </ion-card-content>
     </ion-card>
   </div>
-</ion-content>
+</ion-content> -->

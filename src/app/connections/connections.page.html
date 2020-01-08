@@ -1,0 +1,23 @@
+<ion-header>
+    <!-- <app-toolbar></app-toolbar> -->
+    <ion-toolbar>
+        <ion-icon size = "large" slot="start" name="arrow-back" (click)="goBack()"></ion-icon>
+        <!-- <ion-searchbar></ion-searchbar> -->
+        <ion-label>Search connections</ion-label>
+    </ion-toolbar>
+    </ion-header>
+    <ion-content>
+    <ion-tabs>
+      <ion-tab-bar slot="top" color="light">
+        <ion-tab-button tab="followersTab">
+          <ion-label>Followers</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="followingTab">
+          <ion-label>Following</ion-label>
+        </ion-tab-button>
+    
+      </ion-tab-bar>
+    </ion-tabs>
+    </ion-content>
+    

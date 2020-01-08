@@ -8,7 +8,6 @@ import { AuthenticationService } from './authentication.service';
 import { Observable } from 'rxjs';
 import { MyChilivoteDTO } from '../models/MyChilivoteDTO';
 import { ChilivoteVotableDTO } from '../models/ChilivoteVotableDTO';
-import { ChilivoteRandomDTO } from '../models/ChilivoteRandomDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -57,22 +56,22 @@ export class ChilivoteService {
     return this.http.get<ChilivoteVotableDTO[]>(this.ChilivoteUrl + '/feed', httpOptions);
   }
 
-  getRandomFeed(): Observable<ChilivoteRandomDTO[]>
+  getRandomFeed(): Observable<ChilivoteVotableDTO[]>
   {
     const httpOptions = {
       headers: this.getHeaders()
     };
 
-    return this.http.get<ChilivoteRandomDTO[]>(this.ChilivoteUrl + '/random_feed', httpOptions);
+    return this.http.get<ChilivoteVotableDTO[]>(this.ChilivoteUrl + '/random_feed', httpOptions);
   }
 
-  getTrendingFeed(): Observable<ChilivoteRandomDTO[]>
+  getTrendingFeed(): Observable<ChilivoteVotableDTO[]>
   {
     const httpOptions = {
       headers: this.getHeaders()
     };
 
-    return this.http.get<ChilivoteRandomDTO[]>(this.ChilivoteUrl + '/trending_feed', httpOptions);
+    return this.http.get<ChilivoteVotableDTO[]>(this.ChilivoteUrl + '/trending_feed', httpOptions);
   }
 
   getFireFeed(): Observable<ChilivoteVotableDTO[]>

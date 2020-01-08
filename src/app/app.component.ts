@@ -43,6 +43,12 @@ export class AppComponent {
     this.router.navigate(["/mychilivotes"]);
   }
 
+  onConnections()
+  {
+    this.menuCtrl.toggle();
+    this.router.navigate(["/connections"]);
+  }
+
   onMyFeed(){
     this.menuCtrl.toggle();
     this.router.navigate(["/main"]);

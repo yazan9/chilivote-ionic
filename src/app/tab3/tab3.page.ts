@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ChilivoteService } from 'src/app/services/chilivote.service';
-import { ChilivoteRandomDTO } from '../models/ChilivoteRandomDTO';
 import { UserService } from '../services/user.service';
+import { VoteService } from '../services/vote.service';
+import { ChilivoteVotableDTO } from '../models/ChilivoteVotableDTO';
 
 @Component({
   selector: 'app-tab3',
@@ -10,10 +11,14 @@ import { UserService } from '../services/user.service';
 })
 export class Tab3Page {
 
-  chilivotes: ChilivoteRandomDTO[] = [];
+  chilivotes: ChilivoteVotableDTO[] = [];
   loading:boolean = false;
 
-  constructor(private chilivoteService: ChilivoteService, private userService: UserService) {}
+  constructor(
+    private chilivoteService: ChilivoteService,
+    private userService: UserService,
+    private voteService:VoteService
+    ) {}
 
   ionViewWillEnter(){
     this.loading = true;
@@ -38,5 +43,13 @@ export class Tab3Page {
       let chilivotes = this.chilivotes.filter(c => c.userId === chilivote.userId);
       chilivotes.forEach(c => c.isFollowing = false);
     })  
+  }
+
+  vote(event)
+  {
+    this.voteService.vote(event.answer.id).subscribe(()=> {
+      event.answer.voted = true;
+      event.theOtherAnswer.voted = false;
+    });
   }
 }

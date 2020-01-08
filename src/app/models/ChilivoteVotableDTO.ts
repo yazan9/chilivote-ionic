@@ -7,4 +7,6 @@ export class ChilivoteVotableDTO{
     answerRight: AnswerVoteDTO;
     created_at: Date;
     username: string;
+    isFollowing: boolean;
+    userId:number;
 }

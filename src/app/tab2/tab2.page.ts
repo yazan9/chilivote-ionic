@@ -42,11 +42,11 @@ export class Tab2Page {
     });
   }
 
-  vote(answer: AnswerVoteDTO, theOtherAnswer: AnswerVoteDTO)
+  vote(event)
   {
-    this.voteService.vote(answer.id).subscribe(()=> {
-      answer.voted = true;
-      theOtherAnswer.voted = false;
+    this.voteService.vote(event.answer.id).subscribe(()=> {
+      event.answer.voted = true;
+      event.theOtherAnswer.voted = false;
     });
   }
 
