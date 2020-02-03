@@ -9,8 +9,10 @@
                     <img [src]="user.avatar"/>
                 </ion-avatar>
               <ion-label>{{user.username}}</ion-label>
-              <ion-button *ngIf = "!user.isFollowing" color="primary" (click)="onFollow(user)">Follow</ion-button>
-              <ion-button *ngIf = "user.isFollowing" color="primary" (click)="onUnfollow(user)">Unfollow</ion-button>
+              <ng-container *ngIf="!followButtonDisabled">
+                <ion-button *ngIf = "!user.isFollowing" color="primary" (click)="onFollow(user)">Follow</ion-button>
+                <ion-button *ngIf = "user.isFollowing" color="primary" (click)="onUnfollow(user)">Unfollow</ion-button>
+            </ng-container>
             </ion-item>
       </ion-list>
 

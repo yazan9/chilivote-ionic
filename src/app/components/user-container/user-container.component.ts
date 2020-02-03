@@ -12,6 +12,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class UserContainerComponent implements OnInit, OnChanges {
 
   @Input() users: UserDTO[];
+  @Input() followButtonDisabled:boolean;
   searchText: string;
   
   constructor(

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { UserDTO } from '../models/UserDTO';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-search',
@@ -9,8 +11,11 @@ import { Location } from '@angular/common';
 export class SearchPage implements OnInit {
 
   location:Location;
+  loading:boolean;
+  users: UserDTO[];
+  searchText:string = "";
 
-  constructor(location: Location) {
+  constructor(location: Location, private userService: UserService) {
     this.location = location;
    }
 
@@ -19,6 +24,14 @@ export class SearchPage implements OnInit {
 
   goBack(){
     this.location.back();
+  }
+
+  search(){
+    this.loading = true;
+    this.userService.search(this.searchText).subscribe((result) => {
+      this.loading = false;
+      this.users = result;
+    });
   }
 
 }

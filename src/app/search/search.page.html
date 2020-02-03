@@ -1,10 +1,11 @@
 <ion-header>
   <ion-toolbar style="border:none">
       <ion-icon size = "large" slot="start" name="arrow-back" (click)="goBack()"></ion-icon>
-      <ion-searchbar></ion-searchbar>
+      <ion-searchbar (ionChange)="search($event)" [(ngModel)]="searchText"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <app-user-container *ngIf="users" [users]="users" [followButtonDisabled]="true"></app-user-container>
 </ion-content>
+  

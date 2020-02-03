@@ -24,6 +24,16 @@ export class UserService {
     })
   }
 
+  public search(searchText:string): Observable<UserDTO[]>
+  {
+    const httpOptions = {
+      headers: this.getHeaders(),
+      params: {q:searchText}
+    };
+
+    return this.http.get<UserDTO[]>(this.UserUrl + '/search', httpOptions);
+  }
+
   public getFollowing(): Observable<UserDTO[]>
   {
     const httpOptions = {
