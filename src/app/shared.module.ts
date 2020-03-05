@@ -16,6 +16,7 @@ import { CloudinaryConfiguration, CloudinaryModule } from '@cloudinary/angular-5
 import cloudinaryConfiguration from './config';
 import { ConnectionsSearchPipe } from './pipes/connections-search.pipe';
 import { FormsModule } from '@angular/forms';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 export const cloudinary = {
   Cloudinary: CloudinaryCore
@@ -28,7 +29,9 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
     ChilivoteContainerComponent, 
     UserContainerComponent, 
     ChilivotesTabComponent, 
-    ConnectionsSearchPipe],
+    ConnectionsSearchPipe,
+    UnauthorizedComponent
+  ],
   entryComponents: [],
   imports: [
     IonicModule, 
@@ -49,7 +52,8 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
     ChilivoteContainerComponent, 
     UserContainerComponent, 
     ChilivotesTabComponent, 
-    ConnectionsSearchPipe
+    ConnectionsSearchPipe,
+    UnauthorizedComponent
   ]
 })
 export class SharedModule {}

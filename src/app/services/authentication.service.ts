@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ReturnStatement } from '@angular/compiler';
 
 export interface UserDetails {
   id:number;
@@ -12,6 +13,7 @@ export interface UserDetails {
   avatar: string;
   exp: number;
   username: string;
+  role: string;
 }
 
 interface TokenResponse {
@@ -110,5 +112,11 @@ export class AuthenticationService {
   public logout(): void {
     window.localStorage.removeItem('mean-token');
     this.router.navigateByUrl('/login');
+  }
+
+  public isAuthorized(roles:string[]): boolean
+  {
+    let result = roles.find((role) => role === this.getUserDetails().role);
+    return !!result;
   }
 }

@@ -7,6 +7,8 @@ import { VoteService } from '../services/vote.service';
 import { AnswerVotePairDTO} from '../models/AnswerVotePairDTO';
 
 import { trigger, transition, animate, style } from '@angular/animations';
+import { ROLES } from '../Constants/roles';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-tab4',
@@ -30,10 +32,19 @@ export class Tab4Page implements OnInit {
   currentChilivote: ChilivoteVotableDTO;
   showVotes: boolean;
   NoChilivotes:boolean;
+  authorizedRoles = [ROLES.CHILIVOTER, ROLES.DECENT, ROLES.LEGEND, ROLES.MASTER]
+  authorized:boolean;
+  unauthorizedText:string;
 
-  constructor(private chilivoteService: ChilivoteService, private userService: UserService, private voteService: VoteService) { }
+  constructor(
+    private chilivoteService: ChilivoteService, 
+    private voteService: VoteService,
+    private authService:AuthenticationService
+    ) { }
 
   ngOnInit() {
+    this.unauthorizedText = "You do not have enough privileges to view this page. You have to earn the 'Decent Voter' privilege before you can view Fire Chilivotes";
+    this.authorized = this.authService.isAuthorized(this.authorizedRoles);
   }
 
   ionViewWillEnter(){
@@ -79,20 +90,4 @@ export class Tab4Page implements OnInit {
       this.showVotes = false;
     }, 2000);   
   }
-
-  // onFollow(chilivote)
-  // {
-  //   this.userService.follow(chilivote.userId).subscribe(() => {
-  //     let chilivotes = this.chilivotes.filter(c => c.userId === chilivote.userId);
-  //     chilivotes.forEach(c => c.isFollowing = true);
-  //   })
-  // }
-
-  // onUnfollow(chilivote)
-  // {
-  //   this.userService.unfollow(chilivote.userId).subscribe(() => {
-  //     let chilivotes = this.chilivotes.filter(c => c.userId === chilivote.userId);
-  //     chilivotes.forEach(c => c.isFollowing = false);
-  //   })  
-  // }
 }

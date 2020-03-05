@@ -2,7 +2,11 @@
   <app-toolbar></app-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="!authorized">
+  <app-unauthorized [text]="unauthorizedText"></app-unauthorized>
+</ion-content>
+
+<ion-content *ngIf="authorized">
     <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
 
   <ion-item>

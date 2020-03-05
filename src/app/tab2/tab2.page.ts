@@ -15,31 +15,32 @@ export class Tab2Page {
 
   chilivotes: ChilivoteVotableDTO[] = [];
   loading:boolean = false;
+  authorized:boolean;
+  unauthorizedText:string;
 
-  // users: UserDTO[] = [];
-  // randomUsers: UserDTO[] = [];
-  constructor(private chilivoteService:ChilivoteService, private voteService:VoteService) { }
+  constructor(private chilivoteService:ChilivoteService, private voteService:VoteService, private usersService: UserService) { }
 
   ngOnInit() {
-    
+    this.unauthorizedText = "You cannot access this page until you have followed 20 people";
   }
 
   ionViewWillEnter()
   {
-    // this.userService.getFollowing().subscribe((result) => {
-    //   this.users = result;
-    //   this.users.forEach((user) => {user.isFollowing = true;})
-    // })
-
-    // this.userService.getRandom().subscribe((result) => {
-    //   this.randomUsers = result;
-    // })
+    
     this.loading = true;
-
-    this.chilivoteService.getFeed().subscribe((result) => {
-      this.loading = false;
-      this.chilivotes = result;
-    });
+    this.usersService.getFollowing().subscribe((following) => {
+      if(following && following.length <20){
+        this.authorized = false;
+        this.loading = false;
+      }
+      else{
+        this.chilivoteService.getFeed().subscribe((result) => {
+          this.authorized = true;
+          this.loading = false;
+          this.chilivotes = result;
+        });
+      }
+    })
   }
 
   vote(event)

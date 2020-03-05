@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs/tabs.page';
 import { SharedModule } from './shared.module';
+import { AuthGuard } from './auth/auth.guard';
+import { ROLES } from './Constants/roles';
 
 const routes: Routes = [
   // {
@@ -13,7 +15,8 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule)
   },
-  { path: 'new-chilivote', loadChildren: './components/new-chilivote/new-chilivote.module#NewChilivotePageModule' },
+  { path: 'new-chilivote', loadChildren: './components/new-chilivote/new-chilivote.module#NewChilivotePageModule', 
+    data: {roles: [ROLES.CHILIVOTER, ROLES.MASTER, ROLES.LEGEND, ROLES.ACTIVE, ROLES.VOTER, ROLES.DECENT]} },
   { path: 'main', loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)},
   { path: 'mychilivotes', loadChildren: './components/my-chilivotes/my-chilivotes.module#MyChilivotesPageModule' },
   { path: 'search', loadChildren: './search/search.module#SearchPageModule' },

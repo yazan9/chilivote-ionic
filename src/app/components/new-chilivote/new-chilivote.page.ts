@@ -6,6 +6,8 @@ import { ChilivoteService } from '../../services/chilivote.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ROLES } from 'src/app/Constants/roles';
 
 @Component({
   selector: 'app-new-chilivote',
@@ -17,18 +19,24 @@ export class NewChilivotePage implements OnInit {
   newChilivote: ChilivoteDTOUI;
   photoID: number;
   loading: boolean = false;
+  authorizedRoles = [ROLES.ACTIVE, ROLES.CHILIVOTER, ROLES.DECENT, ROLES.LEGEND, ROLES.MASTER, ROLES.VOTER]
+  authorized:boolean;
+  unauthorizedText:string;
 
   constructor(
     private cloudinaryService: CloudinaryService,
     private chilivoteService: ChilivoteService,
     public actionSheetController: ActionSheetController,
     private router: Router,
-    private camera: Camera
+    private camera: Camera,
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
+    this.authorized = this.authService.isAuthorized(this.authorizedRoles);
     this.newChilivote = new ChilivoteDTOUI();
     this.photoID = 1;
+    this.unauthorizedText = "You do not have enough privileges to view this page. You have to earn the 'Voter' privilege before you can create new Chilivotes";
   }
 
   async openBottomSheet(photoID: number) {
