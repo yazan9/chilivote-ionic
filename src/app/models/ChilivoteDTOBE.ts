@@ -4,4 +4,5 @@ export class ChilivoteDTOBE
     answerLeft:string;
     answerRight:string;
     created_at:Date;
+    role:string;
 }

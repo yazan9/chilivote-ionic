@@ -16,7 +16,7 @@
 
 <ion-grid>
   <ion-row class="ion-align-items-center ion-justify-content-center">
-    <ion-col>
+    <ion-col class="text-align-center">
       <cl-image style="max-width:100%" (click)="openBottomSheet(1)" *ngIf="newChilivote.answerLeft; else defaultIMG1" class="" public-id={{newChilivote.answerLeft}} secure="true">
                     
       </cl-image>
@@ -26,7 +26,7 @@
       />
       </ng-template>
     </ion-col>
-    <ion-col>
+    <ion-col class="text-align-center">
       <cl-image style="max-width:100%" (click)="openBottomSheet(2)" *ngIf="newChilivote.answerRight;  else defaultIMG2" class="" public-id={{newChilivote.answerRight}} secure="true">
       </cl-image>
       <ng-template #defaultIMG2>

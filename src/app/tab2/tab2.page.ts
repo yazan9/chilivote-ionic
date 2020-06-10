@@ -21,7 +21,7 @@ export class Tab2Page {
   constructor(private chilivoteService:ChilivoteService, private voteService:VoteService, private usersService: UserService) { }
 
   ngOnInit() {
-    this.unauthorizedText = "You cannot access this page until you have followed 20 people";
+    this.unauthorizedText = "You cannot access this page until you have followed 1 person";
   }
 
   ionViewWillEnter()
@@ -29,7 +29,7 @@ export class Tab2Page {
     
     this.loading = true;
     this.usersService.getFollowing().subscribe((following) => {
-      if(following && following.length <20){
+      if(following && following.length <1){
         this.authorized = false;
         this.loading = false;
       }

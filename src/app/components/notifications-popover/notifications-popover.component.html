@@ -1,0 +1,10 @@
+<ion-list *ngIf="notifications && notifications.length">
+  <ion-item *ngFor = "let notification of notifications" (click)="goToMyChilivotes(notification)">
+    <ion-label>There are {{notification.count}} votes on your {{notification.chilivoteTitle}} Chilivote</ion-label>
+  </ion-item>
+</ion-list>
+
+<div *ngIf="(!notifications && !loading) || (notifications && !notifications.length)" class="notifications-container">You have no new notifications</div>
+<div *ngIf="loading" style="text-align:center">
+  <ion-spinner name="crescent"></ion-spinner>
+</div>

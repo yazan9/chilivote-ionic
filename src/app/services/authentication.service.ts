@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ReturnStatement } from '@angular/compiler';
+import { Storage } from '@ionic/storage';
+import { TimerService } from './timer.service';
 
 export interface UserDetails {
   id:number;
@@ -37,7 +38,9 @@ export class AuthenticationService {
   constructor(
     private http: HttpClient, 
     private router: Router,
-    private fb: Facebook) { 
+    private fb: Facebook,
+    private storage: Storage
+    ) { 
     this.AuthenticationURL = `${this.env.backendUri}`;
   }
 
@@ -49,6 +52,7 @@ export class AuthenticationService {
       this.login(res.authResponse.accessToken).subscribe(()=>{
         this.loadingSource.next(false);
         this.router.navigate(["tabs"]);
+        this.startRoleCheckTimer();
       });
     } else if (res.status === 'not_authorized') {
       this.loadingSource.next(false);
@@ -114,9 +118,55 @@ export class AuthenticationService {
     this.router.navigateByUrl('/login');
   }
 
-  public isAuthorized(roles:string[]): boolean
+  public isAuthorized(roles:string[]): Promise<boolean>
   {
-    let result = roles.find((role) => role === this.getUserDetails().role);
-    return !!result;
+    //let result = roles.find((role) => role === this.getUserDetails().role);
+    return new Promise<boolean>((resolve) => {this.getRole().then(r => {
+      let result = roles.find((role) => role === r);
+      resolve(!!result);      
+    })
+  });
+  }
+
+  public getRole():Promise<string>{
+    return new Promise((resolve) => {
+      this.storage.get('role').then((role) => {
+        if(role){
+          resolve(role);
+        }
+        else{
+          const httpOptions = {
+            headers: this.getHeaders()
+          };
+          this.http.get(this.AuthenticationURL + '/users/get_role', httpOptions).subscribe(role => {
+            this.storage.set('role', role);
+            resolve(role.toString());
+          })
+        }
+      })
+    });
+  }
+
+  startRoleCheckTimer(){
+    setInterval(() => this.updateRole(), 60000);
+  }
+
+  private updateRole(){
+    const httpOptions = {
+      headers: this.getHeaders(),
+      responseType : 'text' as 'text'
+    };
+    this.http.get(this.AuthenticationURL + '/users/get_role', httpOptions).subscribe(role => {
+      this.storage.set('role', role);
+      console.log(role);
+    })    
+  }
+
+  private getHeaders()
+  {
+    return new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': `Bearer ${this.getToken()}`
+    })
   }
 }

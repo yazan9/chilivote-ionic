@@ -1,8 +1,8 @@
-<ion-content *ngIf="!authorized">
+<ion-content *ngIf="!authorized && !loading">
   <app-unauthorized [text]="unauthorizedText"></app-unauthorized>
 </ion-content>
 
-<ion-content *ngIf="authorized">
+<ion-content *ngIf="authorized && !loading">
   <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
   <div *ngIf = "NoChilivotes" class="message">No Chilivotes to show</div>
   <app-chilivotes-tab *ngIf="currentChilivote"

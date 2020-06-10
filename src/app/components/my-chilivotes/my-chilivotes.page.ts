@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ChilivoteService } from 'src/app/services/chilivote.service';
 import { UserDetails, AuthenticationService } from 'src/app/services/authentication.service';
 import { MyChilivoteDTO } from 'src/app/models/MyChilivoteDTO';
+import { PopoverController, ActionSheetController } from '@ionic/angular';
+import { MychilivoteOptionsComponent } from '../mychilivote-options/mychilivote-options.component';
+import { AvatarService } from 'src/app/services/avatar.service';
 
 @Component({
   selector: 'app-my-chilivotes',
@@ -17,37 +20,69 @@ export class MyChilivotesPage implements OnInit {
 
   constructor(private chilivotesService: ChilivoteService, 
     private auth: AuthenticationService,
+    public popoverController: PopoverController,
+    public actionSheetController: ActionSheetController,
+    public avatarService:AvatarService
     ) { }
 
   ngOnInit() {
 
+  }
+
+  ionViewWillEnter(){
     this.user = this.auth.getUserDetails();
-    this.avatar = this.parseAvatarString(this.user.avatar);
+    this.avatar = this.avatarService.parseAvatarString(this.user.avatar);
 
     this.chilivotesService.getMyChilivotes().subscribe((result)=>{
       this.chilivotes = result;
     });
   }
 
-  parseAvatarString(avatar:string):string
-  {
-    let url = avatar.substr(avatar.indexOf('url='));
-    let removedUrl = url.substr(4, url.indexOf(',')-4);
-    return removedUrl;
+  
+
+  async presentPopover(ev: any, chilivote) {
+    const popover = await this.popoverController.create({
+      component: MychilivoteOptionsComponent,
+      event: ev,
+      translucent: true
+    });
+    popover.present();
+
+    return popover.onDidDismiss().then(
+      (response:any) => {
+        if(response.data === "delete"){
+          this.openBottomSheet(chilivote);
+        }
+      }
+    )
   }
 
-  onDelete(chilivote: MyChilivoteDTO) {
-      // this.DeleteBottomSheetRef = this._bottomSheet.open(DeleteChilivoteSheetComponent);
-      // this.DeleteBottomSheetRef.afterDismissed().subscribe((result:boolean) => {
-      //   if(result == true)
-      //   {
-      //       this.chilivotesService.deleteChilivote(chilivote.id).subscribe((result)=>{
-      //         const index: number = this.chilivotes.indexOf(chilivote);
-      //         if (index !== -1) {
-      //           this.chilivotes.splice(index, 1);
-      //         }
-      //     });          
-      //   }
-      // });
+  async openBottomSheet(chilivote) {
+    const actionSheet = await this.actionSheetController.create({
+      header: "Are you sure? You will lose all the votes on this post",
+      buttons: [{
+        text: 'Delete',
+        icon: 'trash',
+        handler: () => {
+          this.deleteChilivote(chilivote)
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        handler: () => {
+          this.actionSheetController.dismiss();
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  deleteChilivote(chilivote){
+    this.chilivotesService.deleteChilivote(chilivote.id).subscribe((result)=>{
+      const index: number = this.chilivotes.indexOf(chilivote);
+      if (index !== -1) {
+        this.chilivotes.splice(index, 1);
+      }
+  });         
   }
 }

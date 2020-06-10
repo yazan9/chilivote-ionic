@@ -16,6 +16,7 @@ import { CloudinaryConfiguration, CloudinaryModule } from '@cloudinary/angular-5
 import cloudinaryConfiguration from './config';
 import { ConnectionsSearchPipe } from './pipes/connections-search.pipe';
 import { SharedModule } from './shared.module';
+import { IonicStorageModule } from '@ionic/storage';
 
 export const cloudinary = {
   Cloudinary: CloudinaryCore
@@ -30,6 +31,7 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
     BrowserModule, 
     BrowserAnimationsModule, 
     IonicModule.forRoot(), 
+    IonicStorageModule.forRoot(),
     AppRoutingModule, 
     HttpClientModule,
     CloudinaryModule.forRoot(cloudinary, config),

@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, OnChanges, SimpleChanges, AfterViewIn
 import { EventEmitter } from '@angular/core';
 import { AnswerVoteDTO } from 'src/app/models/AnswerVoteDTO';
 import { UserService } from 'src/app/services/user.service';
+import { PopoverController } from '@ionic/angular';
+import { HideReportPopoverComponent } from '../hide-report-popover/hide-report-popover.component';
 
 @Component({
   selector: 'app-chilivotes-tab',
@@ -19,7 +21,10 @@ export class ChilivotesTabComponent implements OnInit, OnChanges, AfterViewInit 
   @Output() voted = new EventEmitter();
   votesTracker: Record<number,boolean>;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    public popoverController: PopoverController
+    ) { }
 
   ngOnInit() {
     this.votesTracker = {};
@@ -76,5 +81,37 @@ export class ChilivotesTabComponent implements OnInit, OnChanges, AfterViewInit 
     answer.votes++;
     if(theOtherAnswer.voted)
       theOtherAnswer.votes--;
+  }
+
+  async presentPopover(ev: any, chilivote) {
+    const popover = await this.popoverController.create({
+      component: HideReportPopoverComponent,
+      event: ev,
+      translucent: true
+    });
+    popover.present();
+
+    return popover.onDidDismiss().then(
+      (response:any) => {
+        if(response.data === "hide"){
+          this.userService.hideChilivote(chilivote.id).subscribe(()=>{
+            this.removeChilivote(chilivote);
+          });
+
+        }
+        else if(response.data === "report"){
+          this.userService.hideAndReportChilivote(chilivote.id).subscribe(()=>{
+            this.removeChilivote(chilivote);
+          });
+        }
+      }
+    )
+  }
+
+  removeChilivote(chilivote) {
+    let index = this.chilivotes.find(chilivote);
+    if (index != -1) {
+      this.chilivotes.splice(index, 1);
+    }
   }
 }

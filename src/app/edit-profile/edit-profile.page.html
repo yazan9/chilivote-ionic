@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Profile</ion-title>
+    <ion-icon size = "large" slot="start" name="arrow-back" (click)="goBack()"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+  <div *ngIf = "!loading && !error" class="profile-container">
+    <ion-item>
+      <ion-label position="floating">Your name</ion-label>
+      <ion-input [(ngModel)] = "profile.username" name="username"></ion-input>
+    </ion-item>
+
+    <div>
+      <img src="{{profile.avatar}}" (click)="openBottomSheet"/>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && error" class="profile-container">
+    An error occured, please try again in a bit
+  </div>
+</ion-content>

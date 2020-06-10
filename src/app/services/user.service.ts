@@ -78,4 +78,22 @@ export class UserService {
 
     return this.http.post<any>(this.UserUrl + '/unfollow/' + id.toString(), "", httpOptions);
   }
+
+  public hideChilivote(id: number): Observable<any>
+  {
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    return this.http.post<any>(this.UserUrl + '/hide/' + id.toString(), "", httpOptions);
+  }
+
+  public hideAndReportChilivote(id: number): Observable<any>
+  {
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    return this.http.post<any>(this.UserUrl + '/hide_and_report/' + id.toString(), "", httpOptions);
+  }
 }

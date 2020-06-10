@@ -22,7 +22,9 @@ const routes: Routes = [
   { path: 'search', loadChildren: './search/search.module#SearchPageModule' },
   { path: 'connections', loadChildren: './connections/connections.module#ConnectionsPageModule' },
   { path: 'followers-tab', loadChildren: './followers-tab/followers-tab.module#FollowersTabPageModule' },
-  { path: 'following-tab', loadChildren: './following-tab/following-tab.module#FollowingTabPageModule' }
+  { path: 'following-tab', loadChildren: './following-tab/following-tab.module#FollowingTabPageModule' },
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'edit-profile', loadChildren: './edit-profile/edit-profile.module#EditProfilePageModule' }
 
 ];
 @NgModule({

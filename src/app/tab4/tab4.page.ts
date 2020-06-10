@@ -32,7 +32,7 @@ export class Tab4Page implements OnInit {
   currentChilivote: ChilivoteVotableDTO;
   showVotes: boolean;
   NoChilivotes:boolean;
-  authorizedRoles = [ROLES.CHILIVOTER, ROLES.DECENT, ROLES.LEGEND, ROLES.MASTER]
+  authorizedRoles = [ROLES.CHILIVOTER, ROLES.DECENT, ROLES.LEGEND, ROLES.MASTER, ROLES.SUPER]
   authorized:boolean;
   unauthorizedText:string;
 
@@ -44,11 +44,16 @@ export class Tab4Page implements OnInit {
 
   ngOnInit() {
     this.unauthorizedText = "You do not have enough privileges to view this page. You have to earn the 'Decent Voter' privilege before you can view Fire Chilivotes";
-    this.authorized = this.authService.isAuthorized(this.authorizedRoles);
   }
 
   ionViewWillEnter(){
-    this.getChilivotes();
+    this.loading = true;
+    this.authService.isAuthorized(this.authorizedRoles).then(authorized => {
+      this.loading = false;
+      this.authorized = authorized;
+      if(this.authorized)
+        this.getChilivotes();
+    }, err => this.loading = false);
   }
 
   getChilivotes(){

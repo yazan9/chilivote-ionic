@@ -6,4 +6,5 @@ export abstract class ROLES {
     public static MASTER = 'master';
     public static LEGEND = 'legend';
     public static CHILIVOTER = 'chilivoter';
+    public static SUPER = 'super';
 }

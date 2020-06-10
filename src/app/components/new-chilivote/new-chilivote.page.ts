@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CloudinaryService } from '../../services/cloudinary.service';
-import { PhotoOptions } from '../../Constants/PhotoOptions';
 import { ChilivoteDTOUI } from '../../models/ChilivoteDTOUI';
 import { ChilivoteService } from '../../services/chilivote.service';
 import { ActionSheetController } from '@ionic/angular';
@@ -19,7 +18,7 @@ export class NewChilivotePage implements OnInit {
   newChilivote: ChilivoteDTOUI;
   photoID: number;
   loading: boolean = false;
-  authorizedRoles = [ROLES.ACTIVE, ROLES.CHILIVOTER, ROLES.DECENT, ROLES.LEGEND, ROLES.MASTER, ROLES.VOTER]
+  authorizedRoles = [ROLES.SUPER, ROLES.ACTIVE, ROLES.CHILIVOTER, ROLES.DECENT, ROLES.LEGEND, ROLES.MASTER, ROLES.VOTER]
   authorized:boolean;
   unauthorizedText:string;
 
@@ -33,7 +32,11 @@ export class NewChilivotePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authorized = this.authService.isAuthorized(this.authorizedRoles);
+    this.loading = true;
+    this.authService.isAuthorized(this.authorizedRoles).then((authorized) => {
+      this.loading = false;
+      this.authorized = authorized;
+    })
     this.newChilivote = new ChilivoteDTOUI();
     this.photoID = 1;
     this.unauthorizedText = "You do not have enough privileges to view this page. You have to earn the 'Voter' privilege before you can create new Chilivotes";

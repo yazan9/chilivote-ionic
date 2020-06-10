@@ -17,6 +17,9 @@ import cloudinaryConfiguration from './config';
 import { ConnectionsSearchPipe } from './pipes/connections-search.pipe';
 import { FormsModule } from '@angular/forms';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { HideReportPopoverComponent } from './components/hide-report-popover/hide-report-popover.component';
+import { MychilivoteOptionsComponent } from './components/mychilivote-options/mychilivote-options.component';
+import { NotificationsPopoverComponent } from './components/notifications-popover/notifications-popover.component';
 
 export const cloudinary = {
   Cloudinary: CloudinaryCore
@@ -30,9 +33,12 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
     UserContainerComponent, 
     ChilivotesTabComponent, 
     ConnectionsSearchPipe,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    HideReportPopoverComponent,
+    MychilivoteOptionsComponent,
+    NotificationsPopoverComponent
   ],
-  entryComponents: [],
+  entryComponents: [HideReportPopoverComponent, MychilivoteOptionsComponent, NotificationsPopoverComponent],
   imports: [
     IonicModule, 
     RouterModule, 
@@ -53,7 +59,9 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
     UserContainerComponent, 
     ChilivotesTabComponent, 
     ConnectionsSearchPipe,
-    UnauthorizedComponent
-  ]
+    UnauthorizedComponent,
+    HideReportPopoverComponent,
+    MychilivoteOptionsComponent
+  ] 
 })
 export class SharedModule {}
