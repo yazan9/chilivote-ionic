@@ -9,8 +9,13 @@ export class AvatarService {
 
   parseAvatarString(avatar:string):string
   {
-    let url = avatar.substr(avatar.indexOf('url='));
-    let removedUrl = url.substr(4, url.indexOf(',')-4);
-    return removedUrl;
+    if(avatar){
+      let url = avatar.substr(avatar.indexOf('url='));
+      let removedUrl = url.substr(4, url.indexOf(',')-4);
+      return removedUrl;
+    }
+    else{
+      return "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y";
+    }    
   }
 }

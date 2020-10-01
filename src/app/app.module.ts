@@ -17,6 +17,8 @@ import cloudinaryConfiguration from './config';
 import { ConnectionsSearchPipe } from './pipes/connections-search.pipe';
 import { SharedModule } from './shared.module';
 import { IonicStorageModule } from '@ionic/storage';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import { authInterceptor } from './interceptors/auth-interceptor';
 
 export const cloudinary = {
   Cloudinary: CloudinaryCore
@@ -40,7 +42,12 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Facebook
+    Facebook,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: authInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   exports:[]

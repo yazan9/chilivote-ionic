@@ -17,14 +17,16 @@ const routes: Routes = [
   },
   { path: 'new-chilivote', loadChildren: './components/new-chilivote/new-chilivote.module#NewChilivotePageModule', 
     data: {roles: [ROLES.CHILIVOTER, ROLES.MASTER, ROLES.LEGEND, ROLES.ACTIVE, ROLES.VOTER, ROLES.DECENT]} },
-  { path: 'main', loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)},
+  { path: 'main', loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule), canActivate: []},
   { path: 'mychilivotes', loadChildren: './components/my-chilivotes/my-chilivotes.module#MyChilivotesPageModule' },
   { path: 'search', loadChildren: './search/search.module#SearchPageModule' },
   { path: 'connections', loadChildren: './connections/connections.module#ConnectionsPageModule' },
   { path: 'followers-tab', loadChildren: './followers-tab/followers-tab.module#FollowersTabPageModule' },
   { path: 'following-tab', loadChildren: './following-tab/following-tab.module#FollowingTabPageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
-  { path: 'edit-profile', loadChildren: './edit-profile/edit-profile.module#EditProfilePageModule' }
+  { path: 'edit-profile', loadChildren: './edit-profile/edit-profile.module#EditProfilePageModule' },
+  { path: 'register', loadChildren: './auth/register/register.module#RegisterPageModule' },
+  { path: 'login', loadChildren: './auth/login/login.module#LoginPageModule' }
 
 ];
 @NgModule({

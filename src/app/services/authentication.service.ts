@@ -7,6 +7,7 @@ import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 import { TimerService } from './timer.service';
+import { ToastService } from './toast.service';
 
 export interface UserDetails {
   id:number;
@@ -25,6 +26,7 @@ interface TokenResponse {
   providedIn: 'root'
 })
 export class AuthenticationService {
+
   private AuthenticationURL: string
   env = environment;
   httpOptions = {
@@ -39,7 +41,8 @@ export class AuthenticationService {
     private http: HttpClient, 
     private router: Router,
     private fb: Facebook,
-    private storage: Storage
+    private storage: Storage,
+    private toastService: ToastService
     ) { 
     this.AuthenticationURL = `${this.env.backendUri}`;
   }
@@ -52,7 +55,10 @@ export class AuthenticationService {
       this.login(res.authResponse.accessToken).subscribe(()=>{
         this.loadingSource.next(false);
         this.router.navigate(["tabs"]);
-        this.startRoleCheckTimer();
+        this.startUpdateTimer();
+      }, err => {
+        this.loadingSource.next(false);
+        this.toastService.presentToast("Error logging in");
       });
     } else if (res.status === 'not_authorized') {
       this.loadingSource.next(false);
@@ -60,11 +66,40 @@ export class AuthenticationService {
     }
     else {
       this.loadingSource.next(false);
-    //   this.logout();
     }
     console.log('Logged into Facebook!', res);
   })
   .catch(e => console.log('Error logging into Facebook', e));
+  }
+
+  public emailLogin(email:string, password:string){
+    this.loadingSource.next(true);
+    this.http.post(this.AuthenticationURL + '/users/emailLogin', {email:email, password:password}).subscribe((data:TokenResponse) => {
+      this.loadingSource.next(false);
+      if (data.token) {
+        this.saveToken(data.token);
+        this.router.navigate(["tabs"]);
+        this.startUpdateTimer();
+      }
+    }, err => {
+      this.loadingSource.next(false);
+      this.toastService.presentToast("Error logging in");
+    })
+  }
+
+  public emailRegister(email:string, password:string){
+    this.loadingSource.next(true);
+    this.http.post(this.AuthenticationURL + '/users/register', {email:email, password:password}).subscribe((data:TokenResponse) => {
+      this.loadingSource.next(false);
+      if (data.token) {
+        this.saveToken(data.token);
+        this.router.navigate(["tabs"]);
+        this.startUpdateTimer();
+      }
+    }, err => {
+      this.loadingSource.next(false);
+      this.toastService.presentToast("An error occured during registration");
+    })
   }
 
   private login(FBToken: string): Observable<any> {
@@ -72,7 +107,6 @@ export class AuthenticationService {
     const request = base.pipe(
       map((data: TokenResponse) => {
         if (data.token) {
-          console.log(data.token);
           this.saveToken(data.token);
         }
         return data;
@@ -120,7 +154,6 @@ export class AuthenticationService {
 
   public isAuthorized(roles:string[]): Promise<boolean>
   {
-    //let result = roles.find((role) => role === this.getUserDetails().role);
     return new Promise<boolean>((resolve) => {this.getRole().then(r => {
       let result = roles.find((role) => role === r);
       resolve(!!result);      
@@ -147,11 +180,11 @@ export class AuthenticationService {
     });
   }
 
-  startRoleCheckTimer(){
-    setInterval(() => this.updateRole(), 60000);
+  startUpdateTimer(){
+    setInterval(() => this.updateTimer(), 60000);
   }
 
-  private updateRole(){
+  private updateTimer(){
     const httpOptions = {
       headers: this.getHeaders(),
       responseType : 'text' as 'text'
@@ -159,7 +192,7 @@ export class AuthenticationService {
     this.http.get(this.AuthenticationURL + '/users/get_role', httpOptions).subscribe(role => {
       this.storage.set('role', role);
       console.log(role);
-    })    
+    });
   }
 
   private getHeaders()

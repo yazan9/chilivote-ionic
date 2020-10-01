@@ -1,21 +1,15 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>register</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="background">
   <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
 
-  <div class="login-container">
-    <ion-button expand="full" color="primary" (click)="fbLogin()">
-      Login with
-      <ion-icon name="logo-facebook"></ion-icon>
-    </ion-button>  
-    <br>
-    -- or --
+  <div class="login-container">  
 
-    <form [formGroup]="loginForm" (ngSubmit)="emailLogin()">
+    <form [formGroup]="registrationForm" (ngSubmit)="emailRegister()">
       <ion-item>
         <ion-label position="floating" >Email</ion-label>
         <ion-input id="email" required formControlName="email"></ion-input>
@@ -27,11 +21,11 @@
         <ion-input id="password" required formControlName="password" type="password"></ion-input>
       </ion-item>
   
-      <ion-button expand="full" color="light" type="submit" [disabled]="!loginForm.valid">
-        Login
+      <ion-button expand="full" color="light" type="submit" [disabled]="!registrationForm.valid">
+        Register
       </ion-button>  
     </form>
     <br>
-    New to chilivote? <a routerLink="/register">Register!</a>
+    Have an account? <a routerLink="'/login'">Login!</a>
   </div>
 </ion-content>

@@ -27,6 +27,7 @@ export class NotificationsPopoverComponent implements OnInit {
   }
 
   goToMyChilivotes(notification: NotificationDTO){
+    this.notificationsService.readNotification(notification.chilivoteId).subscribe();
     this.router.navigate(["/mychilivotes"]);
   }
 

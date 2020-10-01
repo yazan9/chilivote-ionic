@@ -32,4 +32,12 @@ export class NotificationsService {
 
     return this.http.get<NotificationDTO[]>(this.notificationsURL, httpOptions);
   }
+
+  readNotification(id:number){
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    return this.http.post(this.notificationsURL+'delete/'+id,'',httpOptions);
+  }
 }
