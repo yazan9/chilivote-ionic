@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { NotificationDTO } from 'src/app/models/NotificationDTO';
 import { Router } from '@angular/router';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-notifications-popover',
@@ -13,11 +14,15 @@ export class NotificationsPopoverComponent implements OnInit {
   private notifications: NotificationDTO[];
   loading:boolean = false;
 
-  constructor(private notificationsService: NotificationsService, private router: Router) { }
+  constructor(
+    private notificationsService: NotificationsService, 
+    private router: Router,
+    private popoverController: PopoverController
+    ) { }
 
   ngOnInit() {
     this.loading = true;
-    this.notificationsService.getAllNotifications().subscribe((notifications) => {
+    this.notificationsService.getAllNotifications().then((notifications) => {
       this.loading = false;
       this.notifications = notifications;
     }, err => {
@@ -26,9 +31,8 @@ export class NotificationsPopoverComponent implements OnInit {
     })
   }
 
-  goToMyChilivotes(notification: NotificationDTO){
-    this.notificationsService.readNotification(notification.chilivoteId).subscribe();
-    this.router.navigate(["/mychilivotes"]);
+  goToMyChilivote(notification: NotificationDTO){
+    this.popoverController.dismiss();
+    this.router.navigate(["/chilivote-details", notification.chilivoteId]);
   }
-
 }

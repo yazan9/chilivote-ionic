@@ -5,14 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ConnectionsPage } from './connections.page';
-import { SharedModule } from '../shared.module';
-import { ConnectionsPageRoutingModule } from './connections-routing,module';
+import { ProfilePage } from './profile.page';
+import { SharedModule } from 'src/app/shared.module';
+import { SharedPipesModule } from 'src/app/pipes/shared-pipes.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: ConnectionsPage
+    component: ProfilePage
   }
 ];
 
@@ -22,9 +22,9 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
-    ConnectionsPageRoutingModule,
+    SharedPipesModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ConnectionsPage]
+  declarations: [ProfilePage]
 })
-export class ConnectionsPageModule {}
+export class ProfilePageModule {}

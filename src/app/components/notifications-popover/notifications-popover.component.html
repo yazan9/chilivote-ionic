@@ -1,5 +1,5 @@
 <ion-list *ngIf="notifications && notifications.length">
-  <ion-item *ngFor = "let notification of notifications" (click)="goToMyChilivotes(notification)">
+  <ion-item *ngFor = "let notification of notifications" (click)="goToMyChilivote(notification)">
     <ion-label class="ion-text-wrap"><p>There {{notification.count > 1 ? 'are': 'is'}} {{notification.count}} vote{{notification.count > 1 ? 's': ''}} on your
        <b>{{notification.chilivoteTitle}}</b> Chilivote</p></ion-label>
   </ion-item>

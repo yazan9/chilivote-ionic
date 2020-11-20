@@ -4,6 +4,7 @@ import { AuthenticationService } from './authentication.service';
 import { environment } from 'src/environments/environment';
 import { ProfileDTO } from '../models/ProfileDTO';
 import { Observable } from 'rxjs';
+import { AvatarService } from './avatar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,11 @@ export class ProfileService {
     })
   }
 
-  constructor(private http: HttpClient, private authService:AuthenticationService) {
+  constructor(
+    private http: HttpClient, 
+    private authService:AuthenticationService,
+    private avatarService: AvatarService
+    ) {
     this.profileUrl = `${this.env.backendUri}/profile/`;
   }
 
@@ -34,6 +39,8 @@ export class ProfileService {
   }
 
   updateProfile(profile: ProfileDTO):Observable<void>{
+    profile = {...profile}
+    profile.avatar = this.avatarService.buildAvatarUrl(profile.avatar);
     const httpOptions = {
       headers: this.getHeaders()
     };

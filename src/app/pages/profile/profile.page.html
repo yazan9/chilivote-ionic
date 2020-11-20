@@ -8,11 +8,11 @@
 <ion-content>
   <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
 
-  <div *ngIf = "!loading && !error" class="profile-container">
+  <div *ngIf = "!loading && !error && profile" class="profile-container">
     <div class="profile-username">{{profile.username}}</div>
 
     <div>
-      <img src="{{profile.avatar}}"/>
+      <img [src]="profile.avatar | safe"/>
     </div>
 
     <div>

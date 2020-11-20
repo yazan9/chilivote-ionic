@@ -45,12 +45,4 @@ export class Tab1Page {
       chilivotes.forEach(c => c.isFollowing = false);
     })  
   }
-
-  vote(event)
-  {
-    this.voteService.vote(event.answer.id).subscribe(()=> {
-      event.answer.voted = true;
-      event.theOtherAnswer.voted = false;
-    });
-  }
 }

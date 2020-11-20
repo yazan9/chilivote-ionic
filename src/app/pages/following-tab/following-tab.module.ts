@@ -5,13 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SearchPage } from './search.page';
-import { SharedModule } from '../shared.module';
+import { FollowingTabPage } from './following-tab.page';
+import { SharedModule } from 'src/app/shared.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: SearchPage
+    component: FollowingTabPage
   }
 ];
 
@@ -23,6 +23,6 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [SearchPage]
+  declarations: [FollowingTabPage]
 })
-export class SearchPageModule {}
+export class FollowingTabPageModule {}

@@ -6,7 +6,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { ROLES } from 'src/app/Constants/roles';
+import { ROLES } from 'src/app/constants/roles';
 
 @Component({
   selector: 'app-new-chilivote',
@@ -71,25 +71,10 @@ export class NewChilivotePage implements OnInit {
 
   GetFromCamera(photoID:number){
     this.photoID = photoID;
-    const options: CameraOptions = {
-      quality: 20,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      targetWidth: 720,
-      correctOrientation: true
-    }
+    const options: CameraOptions = this.cloudinaryService.getCameraOptions(this.camera);
 
     this.camera.getPicture(options).then((imageData) => {
-      //get base64 image string
-      //let capturedImage=(<any>window).Ionic.WebView.convertFileSrc(imageData);
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-
-      //get blob
-      //let blob = this.dataURItoBlob(capturedImage);
-
-      //pass the blob to the uploader
-      //this.uploadToCloudinary(blob);
 
       this.cloudinaryService.uploadAnswer(base64Image).subscribe((image) => {
         this.loading = false;
@@ -101,22 +86,9 @@ export class NewChilivotePage implements OnInit {
        console.log(err);
        this.loading = false;
      });
-
      }, (err) => {
-      // Handle error
      });
   }
-
-  dataURItoBlob(dataURI) {
-    const byteString = window.atob(dataURI);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([int8Array], { type: 'image/jpeg' });    
-    return blob;
- }
 
  uploadToCloudinary(blob){
   var fileReader = new FileReader();

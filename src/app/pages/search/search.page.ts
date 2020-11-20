@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { UserDTO } from '../models/UserDTO';
-import { UserService } from '../services/user.service';
+import { UserDTO } from 'src/app/models/UserDTO';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-search',

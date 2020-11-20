@@ -26,21 +26,19 @@ export class VoteService {
     })
   }
 
-  vote(id: number): Observable<void>
+  vote(id: number): Observable<AnswerVotePairDTO[]>
   {
     const httpOptions = {
       headers: this.getHeaders()
     };
 
     return this.http.post<any>(this.VoteUrl + '/vote/' + id, "", httpOptions)
-  } 
+  }
 
-  voteAndGetAnswers(id: number): Observable<AnswerVotePairDTO[]>
-  {
-    const httpOptions = {
-      headers: this.getHeaders()
-    };
-
-    return this.http.post<any>(this.VoteUrl + '/vote_return/' + id, "", httpOptions)
+  processVote(theAnswer:AnswerVoteDTO, theOtherAnswer:AnswerVoteDTO, answersVotesList: AnswerVotePairDTO[]){
+    theAnswer.voted = true;
+    theOtherAnswer.voted = false;
+    theAnswer.votes = answersVotesList.find((a) => a.answerId === theAnswer.id).votes;
+    theOtherAnswer.votes = answersVotesList.find((a) => a.answerId === theOtherAnswer.id).votes;
   }
 }

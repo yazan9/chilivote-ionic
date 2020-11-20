@@ -9,4 +9,5 @@ export class ChilivoteVotableDTO{
     username: string;
     isFollowing: boolean;
     userId:number;
+    avatar:string;
 }

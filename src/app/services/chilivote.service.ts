@@ -38,6 +38,14 @@ export class ChilivoteService {
     return this.http.post<ChilivoteDTOBE>(this.ChilivoteUrl + '/add', chilivote, httpOptions)
   }
 
+  getChilivote(id:number):Observable<ChilivoteVotableDTO>{
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    return this.http.get<ChilivoteVotableDTO>(`${this.ChilivoteUrl}/${id}`, httpOptions)
+  }
+
   getMyChilivotes(): Observable<MyChilivoteDTO[]>
   {
     const httpOptions = {

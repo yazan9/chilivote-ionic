@@ -14,8 +14,6 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 import { Cloudinary as CloudinaryCore } from 'cloudinary-core';
 import { CloudinaryConfiguration, CloudinaryModule } from '@cloudinary/angular-5.x';
 import cloudinaryConfiguration from './config';
-import { ConnectionsSearchPipe } from './pipes/connections-search.pipe';
-import { SharedModule } from './shared.module';
 import { IonicStorageModule } from '@ionic/storage';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth-interceptor';

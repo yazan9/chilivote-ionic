@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
-import { UserDTO } from '../models/UserDTO';
-import { ConnectionsSearchPipe } from '../pipes/connections-search.pipe';
-import { filter } from 'minimatch';
+import { UserDTO } from 'src/app/models/UserDTO';
+import { ConnectionsSearchPipe } from 'src/app/pipes/connections-search.pipe';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-followers-tab',

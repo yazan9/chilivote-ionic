@@ -42,13 +42,4 @@ export class Tab2Page {
       }
     })
   }
-
-  vote(event)
-  {
-    this.voteService.vote(event.answer.id).subscribe(()=> {
-      event.answer.voted = true;
-      event.theOtherAnswer.voted = false;
-    });
-  }
-
 }

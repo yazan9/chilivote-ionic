@@ -1,0 +1,9 @@
+<ion-header>
+    <app-toolbar></app-toolbar>
+</ion-header>
+<ion-content>
+    <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+    <app-chilivotes-tab *ngIf="chilivotes && chilivotes.length" [chilivotes]="chilivotes" [votable]="false" [followEnabled]="false"
+    [showVotesAtAllTimes]="true">
+    </app-chilivotes-tab>
+</ion-content>

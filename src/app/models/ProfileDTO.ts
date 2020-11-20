@@ -1,6 +1,6 @@
 export class ProfileDTO{
     public id: number;
-    public username: number;
+    public username: string;
     public avatar: string;
     public created_at: Date;
     public email: string;

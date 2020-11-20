@@ -1,35 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileDTO } from '../models/ProfileDTO';
-import { ProfileService } from '../services/profile.service';
-import { AvatarService } from '../services/avatar.service';
 import { Location } from '@angular/common';
 import { ActionSheetController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { CloudinaryService } from '../services/cloudinary.service';
+import { ProfileDTO } from 'src/app/models/ProfileDTO';
+import { ProfileService } from 'src/app/services/profile.service';
+import { AvatarService } from 'src/app/services/avatar.service';
+import { CloudinaryService } from 'src/app/services/cloudinary.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.scss'],
-  providers:[Camera]
+  providers: [Camera]
 })
 export class EditProfilePage implements OnInit {
 
   profile: ProfileDTO;
   error: boolean = false;
   loading: boolean = false;
-  location:Location;
+  location: Location;
 
   constructor(
-    private profileService: ProfileService, 
+    private profileService: ProfileService,
     private avatarService: AvatarService,
     location: Location,
     public actionSheetController: ActionSheetController,
     private camera: Camera,
-    private cloudinaryService: CloudinaryService
+    private cloudinaryService: CloudinaryService,
+    private router: Router
   ) {
     this.location = location;
-   }
+  }
 
   ngOnInit() {
     this.loading = true;
@@ -41,10 +43,10 @@ export class EditProfilePage implements OnInit {
     }, err => {
       this.loading = false;
       this.error = true;
-    })  
+    })
   }
 
-  goBack(){
+  goBack() {
     this.location.back();
   }
 
@@ -68,34 +70,56 @@ export class EditProfilePage implements OnInit {
     await actionSheet.present();
   }
 
-  ChooseFromGallery()
-  {
-    let element:HTMLElement = document.getElementById("PhotoUploader") as HTMLElement;
+  ChooseFromGallery() {
+    let element: HTMLElement = document.getElementById("PhotoUploader") as HTMLElement;
     element.click();
   }
 
-  GetFromCamera(){
-    const options: CameraOptions = {
-      quality: 20,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
+  GetFromCamera() {
+    const options: CameraOptions = this.cloudinaryService.getCameraOptions(this.camera);
 
     this.camera.getPicture(options).then((imageData) => {
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-      this.cloudinaryService.uploadAnswer(base64Image).subscribe((image) => {
+      this.loading = true;
+      this.cloudinaryService.uploadAvatar(base64Image).subscribe((image) => {
         this.loading = false;
         this.profile.avatar = image.url
-     }, (err) => {
-       console.log(err);
-       this.loading = false;
-     });
+      }, (err) => {
+        console.log(err);
+        this.loading = false;
+      });
 
-     }, (err) => {
+    }, (err) => {
       // Handle error
-     });
+    });
   }
 
+  onFileChanged(event) {
+    const file = event.target.files[0];
+    this.uploadToCloudinary(file);
+  }
+
+  uploadToCloudinary(blob) {
+    var fileReader = new FileReader();
+    fileReader.readAsDataURL(blob);
+    fileReader.onload = () => {
+      this.loading = true;
+      this.cloudinaryService.uploadAvatar(fileReader.result).subscribe((image) => {
+        this.loading = false;
+        this.profile.avatar = image.public_id;
+      }, (err) => {
+        console.log(err);
+        this.loading = false;
+      });
+    };
+  }
+
+  update(){
+    this.profileService.updateProfile(this.profile).subscribe(() => {
+      this.router.navigate(['profile']);
+    }, err => {
+      this.error = true;
+    })
+  }
 }

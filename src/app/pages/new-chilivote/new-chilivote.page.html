@@ -27,7 +27,8 @@
       </ng-template>
     </ion-col>
     <ion-col class="text-align-center">
-      <cl-image style="max-width:100%" (click)="openBottomSheet(2)" *ngIf="newChilivote.answerRight;  else defaultIMG2" class="" public-id={{newChilivote.answerRight}} secure="true">
+      <cl-image style="max-width:100%" (click)="openBottomSheet(2)" *ngIf="newChilivote.answerRight;  else defaultIMG2" class="" 
+      public-id={{newChilivote.answerRight}} secure="true">
       </cl-image>
       <ng-template #defaultIMG2>
       <img (click)="openBottomSheet(2)" class="upload-image-placeholder"

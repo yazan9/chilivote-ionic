@@ -4,6 +4,9 @@ import { AnswerVoteDTO } from 'src/app/models/AnswerVoteDTO';
 import { UserService } from 'src/app/services/user.service';
 import { PopoverController } from '@ionic/angular';
 import { HideReportPopoverComponent } from '../hide-report-popover/hide-report-popover.component';
+import { VoteService } from 'src/app/services/vote.service';
+import { AnswerVotePairDTO } from 'src/app/models/AnswerVotePairDTO';
+import { AvatarService } from 'src/app/services/avatar.service';
 
 @Component({
   selector: 'app-chilivotes-tab',
@@ -16,14 +19,13 @@ export class ChilivotesTabComponent implements OnInit, OnChanges, AfterViewInit 
   @Input() followEnabled:boolean;
   @Input() currentChilivote;
   @Input() showVotesAtAllTimes:boolean;
-  //@Output() follow = new EventEmitter();
-  //@Output() unfollow = new EventEmitter();
-  @Output() voted = new EventEmitter();
-  votesTracker: Record<number,boolean>;
+  votesTracker: Record<number,boolean> = {}
 
   constructor(
     private userService: UserService,
-    public popoverController: PopoverController
+    public popoverController: PopoverController,
+    public voteService: VoteService,
+    public avatarService: AvatarService
     ) { }
 
   ngOnInit() {
@@ -31,17 +33,20 @@ export class ChilivotesTabComponent implements OnInit, OnChanges, AfterViewInit 
   }
 
   ngAfterViewInit(){
-    
+    this.votesTracker = {};
   }
 
   ngOnChanges(obj: SimpleChanges){
     if(obj.currentChilivote){
       this.chilivotes = [];
+      let chilivote = obj.currentChilivote.currentValue;
+      this.processAvatar(chilivote)
       this.chilivotes.push(obj.currentChilivote.currentValue);
     }
 
     if(obj.chilivotes){
       this.chilivotes.forEach(c => {
+        this.processAvatar(c);
         if(c.answerLeft.voted || c.answerRight.voted){
           this.votesTracker[c.id] = true;
         }
@@ -50,13 +55,9 @@ export class ChilivotesTabComponent implements OnInit, OnChanges, AfterViewInit 
     }
   }
 
-  // onFollow(chilivote:any){
-  //   this.follow.emit(chilivote);
-  // }
-
-  // onUnfollow(chilivote:any){
-  //   this.unfollow.emit(chilivote);
-  // }
+  processAvatar(chilivote){
+    chilivote.avatar = this.avatarService.parseAvatarString(chilivote.avatar);
+  }
 
   onFollow(chilivote)
   {
@@ -76,11 +77,9 @@ export class ChilivotesTabComponent implements OnInit, OnChanges, AfterViewInit 
 
   vote(answer: AnswerVoteDTO, theOtherAnswer: AnswerVoteDTO, chilivote){
     if(!this.votable) return;
-    this.voted.emit({answer: answer, theOtherAnswer: theOtherAnswer});
-    this.votesTracker[chilivote.id] = true;
-    answer.votes++;
-    if(theOtherAnswer.voted)
-      theOtherAnswer.votes--;
+    this.voteService.vote(answer.id).subscribe((results: AnswerVotePairDTO[])=> {
+      this.voteService.processVote(answer, theOtherAnswer, results);
+     });  
   }
 
   async presentPopover(ev: any, chilivote) {

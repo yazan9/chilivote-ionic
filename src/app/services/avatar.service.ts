@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { CloudinaryService } from './cloudinary.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AvatarService {
 
-  constructor() { }
+  constructor(private cloudinaryService: CloudinaryService) { }
 
   parseAvatarString(avatar:string):string
   {
@@ -17,5 +18,9 @@ export class AvatarService {
     else{
       return "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y";
     }    
+  }
+
+  buildAvatarUrl(cloudinaryId:string){
+    return `${this.cloudinaryService.getCloudinaryImageUrl()}${cloudinaryId},`;
   }
 }

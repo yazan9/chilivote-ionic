@@ -6,7 +6,6 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
-import { TimerService } from './timer.service';
 import { ToastService } from './toast.service';
 
 export interface UserDetails {

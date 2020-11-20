@@ -5,14 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FollowingTabPage } from './following-tab.page';
-import { SharedModule } from '../shared.module';
-import { ConnectionsSearchPipe } from '../pipes/connections-search.pipe';
+import { ConnectionsPage } from './connections.page';
+import { ConnectionsPageRoutingModule } from './connections-routing.module';
+import { SharedModule } from 'src/app/shared.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: FollowingTabPage
+    component: ConnectionsPage
   }
 ];
 
@@ -22,8 +22,9 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
+    ConnectionsPageRoutingModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [FollowingTabPage]
+  declarations: [ConnectionsPage]
 })
-export class FollowingTabPageModule {}
+export class ConnectionsPageModule {}

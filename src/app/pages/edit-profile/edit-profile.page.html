@@ -13,10 +13,21 @@
       <ion-input [(ngModel)] = "profile.username" name="username"></ion-input>
     </ion-item>
 
-    <div>
-      <img src="{{profile.avatar}}" (click)="openBottomSheet"/>
-    </div>
+    <ion-grid>
+      <ion-row class="ion-align-items-center ion-justify-content-center">
+        <ion-col class="text-align-center">
+          <cl-image *ngIf="profile" public-id="{{profile.avatar}}" (click)="openBottomSheet()"></cl-image>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-center ion-justify-content-center">
+        <ion-col class="text-align-center">
+          <ion-button expand="block" fill="outline" (click)="update()">Update</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
+
+  <input id="PhotoUploader" style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
 
   <div *ngIf="!loading && error" class="profile-container">
     An error occured, please try again in a bit

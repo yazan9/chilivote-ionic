@@ -3,8 +3,8 @@ import { ChilivoteService } from 'src/app/services/chilivote.service';
 import { UserDetails, AuthenticationService } from 'src/app/services/authentication.service';
 import { MyChilivoteDTO } from 'src/app/models/MyChilivoteDTO';
 import { PopoverController, ActionSheetController } from '@ionic/angular';
-import { MychilivoteOptionsComponent } from '../mychilivote-options/mychilivote-options.component';
 import { AvatarService } from 'src/app/services/avatar.service';
+import { MychilivoteOptionsComponent } from 'src/app/components/mychilivote-options/mychilivote-options.component';
 
 @Component({
   selector: 'app-my-chilivotes',

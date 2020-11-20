@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationDTO } from 'src/app/models/NotificationDTO';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { PopoverController } from '@ionic/angular';
 import { NotificationsPopoverComponent } from '../notifications-popover/notifications-popover.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnDestroy {
 
-  notifications: NotificationDTO[];
+  notificationsCount: number = 0;
+  notificationsCounterSubscription: Subscription;
 
   constructor(
     private router: Router, 
@@ -21,11 +23,11 @@ export class ToolbarComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.notificationsService.getAllNotifications().subscribe((notifications) => {
-      this.notifications = notifications;
-    }, err => {
-      this.notifications = [];
-    });
+    this.notificationsService.getAllNotifications().then(() =>{
+      this.notificationsCounterSubscription = this.notificationsService.notificationsCount$.subscribe((count:number) => {
+        this.notificationsCount = count;
+      })
+    })
   }
 
   goToSearch(){
@@ -54,5 +56,10 @@ export class ToolbarComponent implements OnInit {
 
   goToProfile(){
     this.router.navigate(['/profile']);
+  }
+
+  ngOnDestroy(){
+    if(this.notificationsCounterSubscription)
+      this.notificationsCounterSubscription.unsubscribe();
   }
 }
