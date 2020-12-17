@@ -79,6 +79,7 @@ export class ChilivotesTabComponent implements OnInit, OnChanges, AfterViewInit 
     if(!this.votable) return;
     this.voteService.vote(answer.id).subscribe((results: AnswerVotePairDTO[])=> {
       this.voteService.processVote(answer, theOtherAnswer, results);
+      this.votesTracker[chilivote.id] = true;
      });  
   }
 

@@ -53,4 +53,14 @@ export class AppComponent {
     this.menuCtrl.toggle();
     this.router.navigate(["/main"]);
   }
+
+  goToSearch(){
+    this.menuCtrl.toggle();
+    this.router.navigate(['/search']);
+  }
+
+  goToProfile(){
+    this.menuCtrl.toggle();
+    this.router.navigate(['/profile']);
+  }
 }

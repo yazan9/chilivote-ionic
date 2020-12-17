@@ -30,9 +30,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     })
   }
 
-  goToSearch(){
-    this.router.navigate(['/search']);
-  }
+  // goToSearch(){
+  //   this.router.navigate(['/search']);
+  // }
 
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
@@ -54,9 +54,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     )
   }
 
-  goToProfile(){
-    this.router.navigate(['/profile']);
-  }
+  // goToProfile(){
+  //   this.router.navigate(['/profile']);
+  // }
 
   ngOnDestroy(){
     if(this.notificationsCounterSubscription)
