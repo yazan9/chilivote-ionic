@@ -16,15 +16,19 @@
           </ion-col>
           <ion-col size="5" class="pull-right">
             <div>
-              <ion-icon name="more" size="large" (click)="presentPopover($event, chilivote)"></ion-icon>
               
               <ng-container *ngIf="followEnabled">
-    
-                <div>
-                    <ion-button style="text-transform: none" size="small" *ngIf = "!chilivote.isFollowing" color="primary" (click)="onFollow(chilivote)">Follow</ion-button>
-                    <ion-button style="text-transform: none" size="small" *ngIf = "chilivote.isFollowing" color="primary" (click)="onUnfollow(chilivote)">Unfollow</ion-button>
-                  </div>
-                </ng-container>
+              
+                <!-- <div> -->
+                  <ion-button style="text-transform: none; vertical-align: top;" size="small" *ngIf="!chilivote.isFollowing" color="primary"
+                    (click)="onFollow(chilivote)">Follow</ion-button>
+                  <ion-button style="text-transform: none; vertical-align: top;" size="small" *ngIf="chilivote.isFollowing" color="primary"
+                    (click)="onUnfollow(chilivote)">Unfollow</ion-button>
+                <!-- </div> -->
+              </ng-container>
+
+              <ion-icon name="more" size="large" (click)="presentPopover($event, chilivote)"></ion-icon>
+
             </div>
           </ion-col>
         </ion-row>

@@ -8,6 +8,10 @@
   <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
 
   <div class="login-container">  
+    <div class="logo-container">
+      <img src="../../../assets/images/logo.jpg">
+      <div class="moto">Together we choose the best for us</div>
+    </div>
 
     <form [formGroup]="registrationForm" (ngSubmit)="emailRegister()">
       <ion-item>
@@ -26,6 +30,6 @@
       </ion-button>  
     </form>
     <br>
-    Have an account? <a routerLink="'/login'">Login!</a>
+    Have an account? <a routerLink="/login">Login!</a>
   </div>
 </ion-content>
