@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 import { ToastService } from './toast.service';
@@ -35,6 +35,12 @@ export class AuthenticationService {
   private loadingSource = new Subject<boolean>();
 
   loading$ = this.loadingSource.asObservable();
+
+  //Observable sources
+  private rankUpdatedSource = new BehaviorSubject('');
+
+  //Observable streams
+  public rankUpdated$ = this.rankUpdatedSource.asObservable();
 
   constructor(
     private http: HttpClient, 
@@ -190,8 +196,12 @@ export class AuthenticationService {
     };
     this.http.get(this.AuthenticationURL + '/users/get_role', httpOptions).subscribe(role => {
       this.storage.set('role', role);
-      console.log(role);
+      this.broadcastRank(role);
     });
+  }
+
+  broadcastRank(role){
+    this.rankUpdatedSource.next(role);
   }
 
   private getHeaders()

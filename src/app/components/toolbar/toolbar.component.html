@@ -3,7 +3,8 @@
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title slot="start">Chilivote</ion-title>
+        <ion-title slot="start" style="color:red; font-style: italic; cursor: pointer;" (click)="goHome()">Chilivote</ion-title>
+        <ion-title slot="end">Rank: {{rank}}</ion-title>
         
           <!-- <ion-icon size = "large" slot="end" name="search" (click)="goToSearch()"></ion-icon> -->
           <ion-badge *ngIf = "notificationsCount" slot="end" color="primary" style="position: relative; margin-right: -1em;margin-top: -1em;">

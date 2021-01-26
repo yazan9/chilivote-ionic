@@ -25,8 +25,19 @@ export class Tab3Page {
 
     this.chilivoteService.getTrendingFeed().subscribe((result) => {
       this.loading = false;
-      this.chilivotes = result;
+      let chilivotes = this.orderChilivotes(result);
+      this.chilivotes = chilivotes;
     });
+  }
+
+  orderChilivotes(chilivotes: ChilivoteVotableDTO[]){
+    return chilivotes.sort(this.sortByVotes);
+  }
+
+  sortByVotes(a: ChilivoteVotableDTO, b:ChilivoteVotableDTO){
+    if((a.answerLeft.votes + a.answerRight.votes) > (b.answerLeft.votes + b.answerRight.votes))
+      return -1
+    else return 1;
   }
 
   onFollow(chilivote)

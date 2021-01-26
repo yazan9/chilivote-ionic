@@ -69,4 +69,8 @@ export class Tab4Page implements OnInit {
       }
     });
   }
+
+  voted(){
+    this.getChilivotes();
+  }
 }

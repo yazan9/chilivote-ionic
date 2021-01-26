@@ -19,6 +19,7 @@ export class ChilivotesTabComponent implements OnInit, OnChanges, AfterViewInit 
   @Input() followEnabled:boolean;
   @Input() currentChilivote;
   @Input() showVotesAtAllTimes:boolean;
+  @Output() voted = new EventEmitter();
   votesTracker: Record<number,boolean> = {}
 
   constructor(
@@ -80,6 +81,7 @@ export class ChilivotesTabComponent implements OnInit, OnChanges, AfterViewInit 
     this.voteService.vote(answer.id).subscribe((results: AnswerVotePairDTO[])=> {
       this.voteService.processVote(answer, theOtherAnswer, results);
       this.votesTracker[chilivote.id] = true;
+      this.voted.emit();
      });  
   }
 
