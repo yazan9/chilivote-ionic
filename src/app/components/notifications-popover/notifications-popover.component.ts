@@ -11,7 +11,7 @@ import { PopoverController } from '@ionic/angular';
 })
 export class NotificationsPopoverComponent implements OnInit {
 
-  private notifications: NotificationDTO[];
+  public notifications: NotificationDTO[];
   loading:boolean = false;
 
   constructor(

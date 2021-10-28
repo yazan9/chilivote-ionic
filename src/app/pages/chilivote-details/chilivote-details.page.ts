@@ -14,6 +14,7 @@ import { ChilivoteService } from '../../services/chilivote.service';
 export class ChilivoteDetailsPage implements OnInit, OnDestroy {
   routeSubscription: Subscription;
   chilivotes: ChilivoteVotableDTO[] = [];
+  loading: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +33,9 @@ export class ChilivoteDetailsPage implements OnInit, OnDestroy {
 
   loadChilivote(id:number){
     this.chilivotes = [];
+    this.loading = true;
     this.chilivotesService.getChilivote(id).subscribe(chilivote => {
+      this.loading = false;
       this.notificationsService.readNotification(id);
       this.chilivotes.push(chilivote);
     });

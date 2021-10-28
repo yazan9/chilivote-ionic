@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendUri: 'https://chilivote-be.herokuapp.com'
+  backendUri: 'https://chilivote-backend-services.tk'
 };
