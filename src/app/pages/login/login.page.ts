@@ -16,6 +16,7 @@ export class LoginPage implements OnInit {
   loading: boolean = false;
   loginForm: FormGroup;
   isSubmitted:boolean = false;
+  hiddenLogo = false;
   
   constructor(
     private fb: Facebook, 
@@ -34,6 +35,10 @@ export class LoginPage implements OnInit {
       password: new FormControl('', Validators.required)
     });
   }
+  
+  ionViewWillEnter(){
+    this.hiddenLogo = false;
+  }
 
   fbLogin()
   {
@@ -49,5 +54,9 @@ export class LoginPage implements OnInit {
 
   get email(){return this.loginForm.get('email')}
   get password(){return this.loginForm.get('password')}
+
+  hideLogo(){
+    this.hiddenLogo = true;
+  }
 
 }

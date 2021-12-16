@@ -32,6 +32,10 @@ export class NewChilivotePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    
+  }
+
+  ionViewWillEnter(){
     this.loading = true;
     this.authService.isAuthorized(this.authorizedRoles).then((authorized) => {
       this.loading = false;

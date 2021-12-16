@@ -174,7 +174,8 @@ export class AuthenticationService {
         }
         else{
           const httpOptions = {
-            headers: this.getHeaders()
+            headers: this.getHeaders(),
+            responseType : 'text' as 'text'
           };
           this.http.get(this.AuthenticationURL + '/users/get_role', httpOptions).subscribe(role => {
             this.storage.set('role', role);

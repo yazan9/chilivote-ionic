@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendUri: 'https://chilivote-backend-services.tk'
+  backendUri: 'https://chilivote-backend.com'
   //backendUri: 'https://chilivote-be.herokuapp.com'
   //backendUri: 'http://localhost:8080'
 };
