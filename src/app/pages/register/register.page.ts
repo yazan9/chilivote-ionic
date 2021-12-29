@@ -35,6 +35,9 @@ export class RegisterPage implements OnInit {
 
   ionViewWillEnter(){
     this.hiddenLogo = false;
+    if (this.auth.isLoggedIn()){
+      this.router.navigate(["tabs"]);
+    }
   }
 
   emailRegister(){
