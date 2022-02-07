@@ -38,9 +38,13 @@ export class AuthenticationService {
 
   //Observable sources
   private rankUpdatedSource = new BehaviorSubject('');
+  private debugStringsSource = new BehaviorSubject('Initialized Debugger >> ');
 
   //Observable streams
   public rankUpdated$ = this.rankUpdatedSource.asObservable();
+  public debugMessageUpdated$ = this.debugStringsSource.asObservable();
+
+  role: string = "";
 
   constructor(
     private http: HttpClient, 
@@ -159,30 +163,37 @@ export class AuthenticationService {
 
   public isAuthorized(roles:string[]): Promise<boolean>
   {
-    return new Promise<boolean>((resolve) => {this.getRole().then(r => {
+    this.broadcastDebugString(`Inside is Authorized: ${roles}`);
+    return new Promise<boolean>((resolve) => this.getRole().then(r => {
+      this.broadcastDebugString(`Role: ${r}`);
       let result = roles.find((role) => role === r);
-      resolve(!!result);      
-    })
-  });
+      return resolve(!!result);      
+    }, err => {
+      this.broadcastDebugString("Error 503: " +  err);
+    }));
   }
 
   public getRole():Promise<string>{
+    this.broadcastDebugString(`Inside getRole -- `);
     return new Promise((resolve) => {
-      this.storage.get('role').then((role) => {
+      let role = this.role;
+      this.broadcastDebugString(`Role From Storage2: ${role}`);
         if(role){
-          resolve(role);
+          return resolve(role);
         }
         else{
           const httpOptions = {
             headers: this.getHeaders(),
             responseType : 'text' as 'text'
           };
-          this.http.get(this.AuthenticationURL + '/users/get_role', httpOptions).subscribe(role => {
-            this.storage.set('role', role);
-            resolve(role.toString());
+          return this.http.get(this.AuthenticationURL + '/users/get_role', httpOptions).subscribe(role => {
+            this.broadcastDebugString(`Role From Web: ${role}`);
+            this.role = role;
+            return resolve(role.toString());          
+          }, err => {
+            this.broadcastDebugString("Error 501: " +  err);
           })
         }
-      })
     });
   }
 
@@ -196,13 +207,17 @@ export class AuthenticationService {
       responseType : 'text' as 'text'
     };
     this.http.get(this.AuthenticationURL + '/users/get_role', httpOptions).subscribe(role => {
-      this.storage.set('role', role);
-      this.broadcastRank(role);
+      this.role = role;
+      this.broadcastRank(role); 
     });
   }
 
   broadcastRank(role){
     this.rankUpdatedSource.next(role);
+  }
+
+  broadcastDebugString(message: string){
+    this.debugStringsSource.next(message);
   }
 
   private getHeaders()

@@ -4,4 +4,5 @@ export class UserDTO{
     avatar:string;
     created_at:Date;
     isFollowing:boolean;
+    isSelected: boolean;
 }

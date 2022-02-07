@@ -37,9 +37,17 @@
       </ng-template>
     </ion-col>
   </ion-row>
-</ion-grid>    
+</ion-grid>
+
 <section>
-  <ion-button expand="block" (click)="submitChilivote()">Go!</ion-button>
+  <ion-item lines="none">
+    <ion-checkbox color="primary" [(ngModel)]="newChilivote.isPrivate" (ngModelChange)="togglePrivateMode()" slot="start"></ion-checkbox>
+    <ion-label>Make Private</ion-label>
+  </ion-item>
+</section>
+
+<section>
+  <ion-button expand="block" (click)="submitChilivote()" [disabled]="!newChilivote.answerLeft || !newChilivote.answerRight">Go!</ion-button>
 </section>
 <input id="PhotoUploader" style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
 

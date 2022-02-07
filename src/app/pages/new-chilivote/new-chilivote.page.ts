@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CloudinaryService } from '../../services/cloudinary.service';
 import { ChilivoteDTOUI } from '../../models/ChilivoteDTOUI';
 import { ChilivoteService } from '../../services/chilivote.service';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ROLES } from 'src/app/constants/roles';
+import { Subscription } from 'rxjs';
+import { SelectUsersModalComponent } from 'src/app/components/select-users-modal/select-users-modal.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-new-chilivote',
@@ -21,6 +24,11 @@ export class NewChilivotePage implements OnInit {
   authorizedRoles = [ROLES.SUPER, ROLES.ACTIVE, ROLES.CHILIVOTER, ROLES.DECENT, ROLES.LEGEND, ROLES.MASTER, ROLES.VOTER]
   authorized:boolean;
   unauthorizedText:string;
+  debugStringSubscription: Subscription;
+  debugMessages: string = 'Debug Messages: ';
+
+  selectedFollowers: number[] = [];
+  modal;
 
   constructor(
     private cloudinaryService: CloudinaryService,
@@ -28,11 +36,16 @@ export class NewChilivotePage implements OnInit {
     public actionSheetController: ActionSheetController,
     private router: Router,
     private camera: Camera,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    public modalController: ModalController,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
-    
+    this.debugStringSubscription = this.authService.debugMessageUpdated$.subscribe(message => {
+      this.debugMessages += "Subscription fired";
+      this.debugMessages += message;
+    })
   }
 
   ionViewWillEnter(){
@@ -64,6 +77,24 @@ export class NewChilivotePage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  async presentSelectUsersModal() {
+    this.loading = true;
+    let followers;
+    this.userService.getFollowers().subscribe(async (result) => {
+      this.loading = false;
+      followers = result;
+
+      this.modal = await this.modalController.create({
+        component: SelectUsersModalComponent,
+        componentProps: {followers: followers}
+      });
+      await this.modal.present();
+      let followersData = await this.modal.onWillDismiss();
+      this.selectedFollowers = followersData && followersData.data && followersData.data.selectedUsers ? followersData.data.selectedUsers : [];
+      this.newChilivote.followers = this.selectedFollowers;
+    });   
   }
 
   ChooseFromGallery(photoID: number)
@@ -123,5 +154,11 @@ export class NewChilivotePage implements OnInit {
       this.loading = false;
       this.router.navigate(['mychilivotes']);
     });
+  }
+
+  togglePrivateMode(){
+    if(this.newChilivote.isPrivate){
+      this.presentSelectUsersModal();
+    }
   }
 }

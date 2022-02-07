@@ -91,6 +91,15 @@ export class ChilivoteService {
     return this.http.get<ChilivoteVotableDTO[]>(this.ChilivoteUrl + '/fire_chilivote', httpOptions);
   }
 
+  getPrivateFeed(): Observable<ChilivoteVotableDTO[]>
+  {
+    const httpOptions = {
+      headers: this.getHeaders()
+    };
+
+    return this.http.get<ChilivoteVotableDTO[]>(this.ChilivoteUrl + '/private_chilivote', httpOptions);
+  }
+
   deleteChilivote(id:number): Observable<any>
   {
     const httpOptions = {

@@ -13,6 +13,11 @@
                 <ion-button *ngIf = "!user.isFollowing" color="primary" (click)="onFollow(user)">Follow</ion-button>
                 <ion-button *ngIf = "user.isFollowing" color="primary" (click)="onUnfollow(user)">Unfollow</ion-button>
             </ng-container>
+
+            <ng-container *ngIf="selectButtonEnabled">
+                <ion-button *ngIf = "user.isSelected" color="primary" (click)="unselect(user)">Remove</ion-button>
+                <ion-button *ngIf = "!user.isSelected" color="primary" (click)="select(user)">Select</ion-button>
+            </ng-container>
             </ion-item>
       </ion-list>
 

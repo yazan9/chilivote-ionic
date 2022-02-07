@@ -34,6 +34,6 @@ const routes: Routes = [
     SharedModule,
     CloudinaryModule.forRoot(cloudinary, config)
   ],
-  declarations: [NewChilivotePage]
+  declarations: [NewChilivotePage],
 })
 export class NewChilivotePageModule {}

@@ -45,19 +45,21 @@ export class Tab4Page implements OnInit {
   }
 
   ionViewWillEnter(){
-    this.loading = true;
-    this.authService.isAuthorized(this.authorizedRoles).then(authorized => {
-      this.loading = false;
-      this.authorized = authorized;
-      if(this.authorized)
-        this.getChilivotes();
-    }, err => this.loading = false);
+    this.authorized = true;
+    this.getChilivotes();
+    // this.loading = true;
+    // this.authService.isAuthorized(this.authorizedRoles).then(authorized => {
+    //   this.loading = false;
+    //   this.authorized = authorized;
+    //   if(this.authorized)
+    //     this.getChilivotes();
+    // }, err => this.loading = false);
   }
 
   getChilivotes(){
     this.NoChilivotes = false;
     this.loading = true;
-    this.chilivoteService.getFireFeed().subscribe((result) => {
+    this.chilivoteService.getPrivateFeed().subscribe((result) => {
       this.loading = false;
       this.chilivotes = result;
       if(this.chilivotes.length){

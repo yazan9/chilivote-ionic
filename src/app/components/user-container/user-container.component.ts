@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { UserDTO } from '../../models/UserDTO';
 import { UserService } from '../../services/user.service';
 import { ConnectionsSearchPipe } from 'src/app/pipes/connections-search.pipe';
@@ -13,7 +13,10 @@ export class UserContainerComponent implements OnInit, OnChanges {
 
   @Input() users: UserDTO[];
   @Input() followButtonDisabled:boolean;
-  searchText: string;
+  @Input() selectButtonEnabled: boolean = false;
+
+  @Output() selectedFollowersEvent = new EventEmitter();
+  searchText: string='';
   
   constructor(
     private userService:UserService,
@@ -52,8 +55,24 @@ export class UserContainerComponent implements OnInit, OnChanges {
 
   parseAvatarString(avatar:string):string
   {
+    if(!avatar)
+      return "";
     let url = avatar.substr(avatar.indexOf('url='));
     let removedUrl = url.substr(4, url.indexOf(',')-4);
     return removedUrl;
+  }
+
+  select(user: UserDTO){
+    user.isSelected = true;
+    this.emiteSelectedUsers();
+  }
+
+  unselect(user: UserDTO){
+    user.isSelected = false;
+    this.emiteSelectedUsers();
+  }
+
+  emiteSelectedUsers(){
+    this.selectedFollowersEvent.emit(this.users.filter(u => u.isSelected).map(u => u.id));
   }
 }

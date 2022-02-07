@@ -1,0 +1,14 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Select Followers</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-user-container *ngIf="followers" [users]="followers" 
+  [selectButtonEnabled]="true" [followButtonDisabled]="true" (selectedFollowersEvent)="updateSelectedFollowers($event)"
+  ></app-user-container>
+</ion-content>

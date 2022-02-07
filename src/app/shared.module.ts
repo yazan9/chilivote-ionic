@@ -20,6 +20,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { HideReportPopoverComponent } from './components/hide-report-popover/hide-report-popover.component';
 import { MychilivoteOptionsComponent } from './components/mychilivote-options/mychilivote-options.component';
 import { NotificationsPopoverComponent } from './components/notifications-popover/notifications-popover.component';
+import { SelectUsersModalComponent } from './components/select-users-modal/select-users-modal.component';
 
 export const cloudinary = {
   Cloudinary: CloudinaryCore
@@ -36,9 +37,10 @@ export const config: CloudinaryConfiguration = cloudinaryConfiguration;
     UnauthorizedComponent,
     HideReportPopoverComponent,
     MychilivoteOptionsComponent,
-    NotificationsPopoverComponent
+    NotificationsPopoverComponent,
+    SelectUsersModalComponent
   ],
-  entryComponents: [HideReportPopoverComponent, MychilivoteOptionsComponent, NotificationsPopoverComponent],
+  entryComponents: [HideReportPopoverComponent, MychilivoteOptionsComponent, NotificationsPopoverComponent, SelectUsersModalComponent],
   imports: [
     IonicModule, 
     RouterModule, 
