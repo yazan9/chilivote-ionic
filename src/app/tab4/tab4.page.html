@@ -5,10 +5,9 @@
 <ion-content *ngIf="authorized && !loading">
   <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
   <div *ngIf = "NoChilivotes" class="message">No Chilivotes to show</div>
-  <app-chilivotes-tab *ngIf="currentChilivote"
-   [currentChilivote] = "currentChilivote"
+   <app-chilivotes-tab *ngIf="chilivotes"
+   [chilivotes]="chilivotes"
    [votable]="true"
    [followEnabled]="true"
-   (voted)="voted()"
    ></app-chilivotes-tab>
 </ion-content>

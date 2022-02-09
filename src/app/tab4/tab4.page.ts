@@ -47,13 +47,6 @@ export class Tab4Page implements OnInit {
   ionViewWillEnter(){
     this.authorized = true;
     this.getChilivotes();
-    // this.loading = true;
-    // this.authService.isAuthorized(this.authorizedRoles).then(authorized => {
-    //   this.loading = false;
-    //   this.authorized = authorized;
-    //   if(this.authorized)
-    //     this.getChilivotes();
-    // }, err => this.loading = false);
   }
 
   getChilivotes(){
@@ -62,17 +55,9 @@ export class Tab4Page implements OnInit {
     this.chilivoteService.getPrivateFeed().subscribe((result) => {
       this.loading = false;
       this.chilivotes = result;
-      if(this.chilivotes.length){
-        this.currentChilivote = this.chilivotes[0];    
-      }
-      else{
+      if(!this.chilivotes.length){
         this.NoChilivotes = true;
-        this.currentChilivote = null;
       }
     });
-  }
-
-  voted(){
-    this.getChilivotes();
   }
 }
