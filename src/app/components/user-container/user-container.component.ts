@@ -3,6 +3,7 @@ import { UserDTO } from '../../models/UserDTO';
 import { UserService } from '../../services/user.service';
 import { ConnectionsSearchPipe } from 'src/app/pipes/connections-search.pipe';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AvatarService } from 'src/app/services/avatar.service';
 
 @Component({
   selector: 'app-user-container',
@@ -21,7 +22,9 @@ export class UserContainerComponent implements OnInit, OnChanges {
   constructor(
     private userService:UserService,
     public connectionsSearchFilter: ConnectionsSearchPipe,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    private avatarService: AvatarService
+    ) { }
 
   ngOnInit() {
     this.processAvatars();
@@ -35,7 +38,7 @@ export class UserContainerComponent implements OnInit, OnChanges {
 
   processAvatars(){
     this.users.forEach((user) => {
-      user.avatar = this.parseAvatarString(user.avatar);
+      user.avatar = this.avatarService.parseAvatarString(user.avatar);
     })
   }
 
@@ -51,15 +54,6 @@ export class UserContainerComponent implements OnInit, OnChanges {
     this.userService.unfollow(user.id).subscribe(() => {
       user.isFollowing = false;
     })  
-  }
-
-  parseAvatarString(avatar:string):string
-  {
-    if(!avatar)
-      return "";
-    let url = avatar.substr(avatar.indexOf('url='));
-    let removedUrl = url.substr(4, url.indexOf(',')-4);
-    return removedUrl;
   }
 
   select(user: UserDTO){
