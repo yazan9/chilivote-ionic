@@ -52,8 +52,13 @@ export class Tab4Page implements OnInit {
   getChilivotes(){
     this.NoChilivotes = false;
     this.loading = true;
-    this.chilivoteService.getPrivateFeed().subscribe((result) => {
+    this.chilivoteService.getPrivateFeed().subscribe((result: ChilivoteVotableDTO[] ) => {
       this.loading = false;
+
+      if(result){
+        result.sort((a, b) => a.created_at > b.created_at ? -1 : a.created_at > b.created_at ? 1 : 0)
+      }
+
       this.chilivotes = result;
       if(!this.chilivotes.length){
         this.NoChilivotes = true;

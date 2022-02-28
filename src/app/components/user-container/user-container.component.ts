@@ -27,9 +27,11 @@ export class UserContainerComponent implements OnInit, OnChanges {
     ) { }
 
   ngOnInit() {
-    this.processAvatars();
-
     this.searchText = '';
+  }
+
+  ionViewWillEnter(){
+    this.processAvatars();
   }
 
   ngOnChanges(){
