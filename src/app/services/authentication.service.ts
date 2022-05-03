@@ -96,9 +96,9 @@ export class AuthenticationService {
     })
   }
 
-  public emailRegister(email:string, password:string){
+  public emailRegister(email:string, password:string, username: string){
     this.loadingSource.next(true);
-    this.http.post(this.AuthenticationURL + '/users/register', {email:email, password:password}).subscribe((data:TokenResponse) => {
+    this.http.post(this.AuthenticationURL + '/users/register', {email:email, password:password, username: username}).subscribe((data:TokenResponse) => {
       this.loadingSource.next(false);
       if (data.token) {
         this.saveToken(data.token);

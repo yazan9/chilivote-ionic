@@ -28,6 +28,7 @@ export class RegisterPage implements OnInit {
     });
 
     this.registrationForm = new FormGroup({
+      username: new FormControl('', Validators.required),
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     });
@@ -42,11 +43,12 @@ export class RegisterPage implements OnInit {
 
   emailRegister(){
     if(!this.registrationForm.valid) return;
-    this.auth.emailRegister(this.email.value, this.password.value);
+    this.auth.emailRegister(this.email.value, this.password.value, this.username.value);
   }
 
   get email(){return this.registrationForm.get('email')}
   get password(){return this.registrationForm.get('password')}
+  get username(){return this.registrationForm.get('username')};
 
   hideLogo(){
     this.hiddenLogo = true;

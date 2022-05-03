@@ -11,21 +11,45 @@
   <div *ngIf = "!loading && !error && profile" class="profile-container">
     <div class="profile-username">{{profile.username}}</div>
 
-    <div>
-      <img [src]="profile.avatar | safe"/>
+    <div class="avatar-container">
+      <ion-avatar>
+        <img [src]="profile.avatar"/>
+      </ion-avatar>
     </div>
+    
 
-    <div>
-      <p>Rank: {{profile.role}}</p>
-      <p>Following: {{profile.following}}</p>
-      <p>Followers: {{profile.followers}}</p>
-      <p>Posts: {{profile.posts}}</p>
-      <p>Voted on: {{profile.votedOn}}</p>
-      <p>Recieved votes on: {{profile.receivedVotesOn}}</p>
+    <div style="margin-top:20px">
+      <ion-button fill="outline" (click)="goToEditProfile()">Edit Profile</ion-button>
+
+      <p><strong>Rank</strong> <br/>{{profile.role}}</p>
+
+        <div style="display:flex; justify-content: center;">
+          <div style="flex:1">
+            <strong>{{profile.following}}</strong><br/>
+            <span class="text-grey text-small">Following</span>
+          </div>
+          <div style="flex:1">
+            <strong>{{profile.followers}}</strong><br/>
+            <span class="text-grey text-small">Followers</span>
+          </div>
+        </div>
+        <br/>
+        <div style="display:flex; justify-content: center;">
+          <div style="flex:1">
+            <span class="text-red text-small">Posts</span><br/>
+            {{profile.posts}}
+          </div>
+          <div style="flex:1">
+            <span class="text-red text-small">Votes Received</span><br/>
+            {{profile.receivedVotesOn}}
+          </div>
+
+          <div style="flex:1">
+            <span class="text-red text-small">Voted On</span><br/>
+            {{profile.votedOn}}
+          </div>
+        </div>
     </div>  
-
-    <ion-button expand="block" fill="outline" (click)="goToEditProfile()">Edit Profile</ion-button>
-
   </div>
 
   <div *ngIf="!loading && error" class="profile-container">

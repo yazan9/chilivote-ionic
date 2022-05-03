@@ -1,9 +1,32 @@
 .profile-container{
     text-align: center;
     margin-top: 2rem;
+    justify-content: center;
 }
 
 .profile-username{
     font-size: larger;
     font-weight: bolder;
 }
+
+.avatar-container{
+    display: flex; 
+    justify-content: center
+ }
+
+ .text-grey{
+    color: grey;
+ }
+
+ .text-small{
+    font-size: smaller;
+ }
+
+ .text-red{
+    color: #8b2133;
+ }
+
+ ion-avatar{
+    width: 100px;
+    height: 100px;
+  }

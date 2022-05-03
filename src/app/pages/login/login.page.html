@@ -12,17 +12,14 @@
   <div class="login-container">
     <div class="logo-container" *ngIf="!hiddenLogo">
       <img src="../../../assets/images/logo.jpg">
+      <div class="moto">Chilivote</div>
       <div class="moto">Together we choose the best for us</div>
       <div class="logo"></div>
     </div>
-    <ion-button expand="full" color="primary" (click)="fbLogin()">
-      Login with
-      <ion-icon name="logo-facebook"></ion-icon>
-    </ion-button>  
-    <br>
-    -- or --
+    
 
     <form [formGroup]="loginForm" (ngSubmit)="emailLogin()">
+      
       <ion-item>
         <ion-label position="floating" >Email</ion-label>
         <ion-input id="email" required formControlName="email" (click)="hideLogo()"></ion-input>
