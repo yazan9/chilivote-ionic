@@ -26,6 +26,7 @@ export class Tab1Page {
     this.loading = true;
     this.chilivoteService.getRandomFeed().subscribe((result) => {
       this.loading = false;
+      result.sort((a,b) => a.created_at > b.created_at ? -1 : 1);
       this.chilivotes = result;
     });
   }
